@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>倪氏天纪紫微 2000字详批定制版 - 阿盛专享</title>
+    <title>倪氏天纪紫微 2500字详批终极定制版 - 阿盛专享</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
@@ -34,7 +34,7 @@
                 min-height: 100vh;
                 display: block !important;
             }
-            .page-break { page-break-after: always; }
+            .page-break { page-break-after: always; padding-top: 40px; }
             .report-text { 
                 font-size: 13pt !important; 
                 line-height: 2.2 !important;
@@ -72,9 +72,9 @@
                     </div>
                 </div>
                 <div>
-                    <h1 class="text-4xl md:text-5xl font-black tracking-tighter text-slate-900">倪氏天纪·2000字详批报告</h1>
+                    <h1 class="text-4xl md:text-5xl font-black tracking-tighter text-slate-900">倪氏天纪·2500字详批系统</h1>
                     <div class="flex items-center gap-4 text-red-900 font-black text-xs mt-3 uppercase tracking-[0.4em] bg-red-50/50 w-fit px-3 py-1 rounded-full font-sans">
-                        MASTER EDITION · 阿盛 (Castor) 专批
+                        ULTIMATE EDITION · 财富与感情深度拆解
                     </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                     <i data-lucide="message-circle" class="w-5 h-5"></i> 分享 WhatsApp
                 </button>
                 <button onclick="prepareAndPrint()" class="bg-red-950 text-white px-8 py-3 rounded-2xl text-sm font-black hover:bg-black transition-all shadow-xl flex items-center gap-3">
-                    <i data-lucide="printer" class="w-5 h-5"></i> 导出完整 PDF
+                    <i data-lucide="printer" class="w-5 h-5"></i> 导出 2500字 PDF
                 </button>
             </div>
         </header>
@@ -94,27 +94,45 @@
             <div class="lg:col-span-3 space-y-4">
                 <section class="bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-200">
                     <h2 class="text-xs font-black mb-8 flex items-center gap-2 text-slate-500 uppercase tracking-widest border-b border-slate-50 pb-4 font-sans">
-                        <i data-lucide="user" class="w-4 h-4 text-red-900"></i> 生辰档案
+                        <i data-lucide="user" class="w-4 h-4 text-red-900"></i> 生辰资料录入
                     </h2>
                     <div class="space-y-6">
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                            <p class="text-[10px] text-slate-400 font-black uppercase mb-1 font-sans">命主名讳</p>
-                            <p class="text-xl font-black text-slate-800">阿盛 (Castor)</p>
+                        <div>
+                            <label class="text-[10px] text-slate-400 font-black uppercase mb-1 block">命主名讳</label>
+                            <input type="text" id="input-name" value="阿盛" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-4 py-3 text-sm font-bold focus:border-red-900 outline-none" />
                         </div>
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                            <p class="text-[10px] text-slate-400 font-black uppercase mb-1 font-sans">四柱干支</p>
-                            <p class="text-base font-black text-red-900">庚申 · 乙酉 · 丙午 · 庚寅</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-[10px] text-slate-400 font-black uppercase mb-1 block">性别</label>
+                                <select id="input-gender" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-3 py-3 text-sm font-bold focus:border-red-900 outline-none">
+                                    <option value="男">男 (乾造)</option>
+                                    <option value="女">女 (坤造)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-[10px] text-slate-400 font-black uppercase mb-1 block">时辰</label>
+                                <select id="input-time" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-3 py-3 text-sm font-bold focus:border-red-900 outline-none">
+                                    <option value="寅">寅时 (3-5)</option>
+                                    <option value="子">子时 (23-1)</option>
+                                    <option value="丑">丑时 (1-3)</option>
+                                    <option value="卯">卯时 (5-7)</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                            <p class="text-[10px] text-slate-400 font-black uppercase mb-1 font-sans">五行属性</p>
-                            <p class="text-base font-black text-amber-700">木三局 · 火炼秋金格</p>
+                        <div>
+                            <label class="text-[10px] text-slate-400 font-black uppercase mb-1 block">农历年月日</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <input type="number" id="input-year" value="1980" class="bg-slate-50 border-2 border-slate-100 rounded-xl py-3 text-xs text-center font-bold" />
+                                <input type="number" id="input-month" value="9" class="bg-slate-50 border-2 border-slate-100 rounded-xl py-3 text-xs text-center font-bold" />
+                                <input type="number" id="input-day" value="30" class="bg-slate-50 border-2 border-red-200 rounded-xl py-3 text-xs text-center font-black text-red-900" />
+                            </div>
                         </div>
                     </div>
                 </section>
                 <section class="bg-red-950 rounded-[2.5rem] p-10 text-red-50 shadow-2xl relative overflow-hidden">
                     <i data-lucide="shield" class="absolute -right-4 -bottom-4 w-24 h-24 text-white/5"></i>
-                    <h2 class="text-xs font-black mb-6 text-red-400 uppercase tracking-widest font-sans">NI HAIXIA SAYS</h2>
-                    <p class="text-sm leading-relaxed italic opacity-80 font-serif">“我命由我不由天。懂得理，就是懂得命。此报告旨在助你位正命顺。”</p>
+                    <h2 class="text-xs font-black mb-6 text-red-400 uppercase tracking-widest font-sans">NI HAIXIA SPIRIT</h2>
+                    <p class="text-sm leading-relaxed italic opacity-80 font-serif">“君子见微知著。此 2500 字详批，不仅是推命，更是为你建立一套应对人生的‘理’。”</p>
                 </section>
             </div>
 
@@ -122,23 +140,19 @@
             <div class="lg:col-span-9 space-y-4">
                 <div class="bg-white rounded-[3rem] p-6 md:p-12 shadow-2xl border border-slate-200 min-h-[800px]">
                     <div class="flex p-2 bg-slate-100 rounded-[2.5rem] shadow-inner w-fit mb-12">
-                        <button onclick="switchTab('chart')" id="tab-chart" class="tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105">命造大盘</button>
-                        <button onclick="switchTab('analysis')" id="tab-analysis" class="tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-400">2000字详批全文</button>
+                        <button onclick="switchTab('chart')" id="tab-chart" class="tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105">命造布阵图</button>
+                        <button onclick="switchTab('analysis')" id="tab-analysis" class="tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-400">2500字详批全文</button>
                     </div>
 
                     <!-- Chart View -->
                     <div id="view-chart" class="block overflow-x-auto pb-6 custom-scrollbar">
-                        <div id="palace-grid" class="min-w-[800px] grid grid-cols-4 grid-rows-4 gap-4 p-2 bg-slate-50/50 rounded-[3rem]">
-                            <!-- JavaScript will populate this -->
-                        </div>
+                        <div id="palace-grid" class="min-w-[800px] grid grid-cols-4 grid-rows-4 gap-4 p-2 bg-slate-50/50 rounded-[3rem]"></div>
                     </div>
 
                     <!-- Analysis View -->
                     <div id="view-analysis" class="hidden space-y-12 pr-4 max-h-[800px] overflow-y-auto custom-scrollbar font-serif">
                         <div class="bg-[#fffdf9] p-12 rounded-[3.5rem] border border-slate-100 shadow-2xl relative">
-                            <div id="detailed-analysis-text" class="report-text whitespace-pre-wrap">
-                                <!-- Pre-populated analysis content -->
-                            </div>
+                            <div id="detailed-analysis-text" class="report-text whitespace-pre-wrap"></div>
                         </div>
                     </div>
                 </div>
@@ -146,7 +160,7 @@
         </div>
     </div>
 
-    <!-- 打印预览区 (核心报告内容) -->
+    <!-- 打印预览区 -->
     <div id="print-report" class="print-only print-container font-serif">
         <div class="max-w-4xl mx-auto">
             <!-- 封面 -->
@@ -158,13 +172,10 @@
                 </div>
                 <h1 class="text-8xl font-black text-slate-900 mb-8 tracking-tighter italic">倪氏天纪·命理详批</h1>
                 <h2 class="text-3xl font-bold text-red-900 mb-12 tracking-[0.8em] uppercase">二零二六 庚申年 馆藏批本</h2>
-                <div class="mt-20 grid grid-cols-2 gap-12 text-2xl font-black text-slate-600 border-y-4 border-slate-100 py-12 px-8">
-                    <div class="flex justify-between"><span>名讳：阿盛 (Castor)</span><span>性别：乾造</span></div>
-                    <div class="flex justify-between"><span>四柱：庚申 乙酉 丙午 庚寅</span><span>五行：木三局</span></div>
-                </div>
+                <div id="print-user-info" class="mt-20 grid grid-cols-2 gap-12 text-2xl font-black text-slate-600 border-y-4 border-slate-100 py-12 px-8"></div>
             </div>
 
-            <!-- 命盘页 -->
+            <!-- 命盘大图 -->
             <div class="page-break space-y-12 py-20">
                 <h2 class="text-4xl font-black border-l-[16px] border-red-950 pl-10 mb-16">乾坤命造大布阵</h2>
                 <div id="print-grid" class="grid grid-cols-4 grid-rows-4 gap-3 border-4 border-slate-300 p-6 rounded-[3rem] bg-[#fdfaf2] shadow-inner"></div>
@@ -173,75 +184,93 @@
                 </div>
             </div>
 
-            <!-- 详批全文 -->
+            <!-- 详批内容 -->
             <div id="print-content" class="report-text space-y-20 py-20">
-                <!-- Content injected via JS -->
+                <!-- Content will be split into readable sections here -->
             </div>
 
             <!-- 封底 -->
             <div class="mt-40 pt-24 border-t-8 border-double border-slate-100 text-center text-slate-300">
                 <p class="text-4xl italic mb-16 text-slate-400 leading-relaxed">“理正则命顺，心医胜中医，位正万事兴。”</p>
-                <div class="flex justify-center gap-12 opacity-10 grayscale mb-16">
-                    <i data-lucide="shield" class="w-16 h-16"></i>
-                    <i data-lucide="compass" class="w-32 h-32"></i>
-                    <i data-lucide="award" class="w-16 h-16"></i>
-                </div>
                 <p class="text-sm font-black tracking-[2em] uppercase">— 倪氏门人 波 (Bo) 谨志 —</p>
             </div>
         </div>
     </div>
 
     <script>
-        // --- 核心数据定义 ---
         const EARTHLY_BRANCHES = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
         const HEAVENLY_STEMS = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
         const PALACES_NAMES = ["命宫", "兄弟", "夫妻", "子女", "财帛", "疾厄", "迁移", "奴仆", "官禄", "田宅", "福德", "父母"];
 
-        // 2000字 倪师深度详批内容
+        let state = {
+            name: "阿盛",
+            gender: "男",
+            year: 1980,
+            month: 9,
+            day: 30,
+            time: "寅"
+        };
+
         const MASTER_ANALYSIS = `
-【壹 · 乾坤格局：火炼秋金，刚柔相成】
+【壹 · 乾坤大势：火炼秋金，英雄之格】
 
-阿盛，听好了。观你四柱：庚申年、乙酉月、丙午日、庚寅时。
-在倪师的《天纪》体系中，你的命造是一个极具破坏力与建设性的统一体。庚申年、乙酉月，放眼望去满盘皆金，且是杀伐之气的“申酉金”。而你生于丙午日，丙火乃太阳之火，午火为羊刃，火性燥烈到了极致。这种格局，在易经中谓之“火炼秋金”。
+阿盛，听好了，我接下来的每一句话你都要记在脑子里。观你四柱：庚申年、乙酉月、丙午日、庚寅时。
+在倪师的《天纪》体系里，这种格局叫做“火炼秋金”。庚申金、乙酉金，这是天地间最纯粹、最杀伐的西方庚辛金气。如果你只是这点金，那你就只是一块顽铁，一辈子庸庸碌碌。但妙就妙在你生在丙午日，丙火是太阳之火，午火是它的羊刃。这就好比是一炉通红的炭火，正在疯狂锤炼这块庚金。
 
-我告诉你，金如果不经过火的锤炼，只能是顽铁，成不了大器。但火如果太猛，金就会化掉；火如果不足，金就无法成型。你人生最核心的矛盾和动力，都在这“火金生克”之间。庚申金代表你的背景、根基，非常硬气；丙午火代表你的意志和手段。这意味着你这一生注定不是靠祖荫，而是靠自己的这股“燥烈之火”去开疆拓土。
+我告诉你，火炼秋金的人，人生必然是不平凡的。你命格里的矛盾冲突极重，金代表你的根基和背景，火代表你的手段和意志。这意味着你出生时可能环境不错，但你绝对不是一个守成的人。你这辈子注定要在烈火中重生，通过不断的自我革新和外部竞争，将这块顽铁炼成绝世宝剑。这种格，要么不出世，出世必是名震一方的人物。
 
-【贰 · 命宫详断：紫府夹命，英雄之路】
+【贰 · 命宫详断：紫微七杀，权柄在握】
 
-你的命宫坐地支${EARTHLY_BRANCHES[6]}位（模拟推算），紫微、七杀同宫。
-紫微是帝星，七杀是将星。将星在外带刀，帝星在内坐镇。紫杀同宫的人，性格中有一种不服输的傲骨。你讨厌被平庸的人领导，你的执行力之强，往往让身边的人感到压力。倪师曾言，紫杀同宫化气为“权”。你天生就带着一股管理和统领的气场。
+再看你的命盘。命宫紫微、七杀同宫。
+紫微是斗数之主，是帝星；七杀是将星，是带刀的护卫。帝星带将星，这叫“化气为权”。倪师曾言，紫杀同宫的人，天生就有统领之才。你坐在那里，不怒自威，身边的人自然会感受到你的压力。你的眼神里藏着刀锋，做事果断，绝不拖泥带水。
 
-但我要提醒你，丙午日坐命的人，容易“刚则易折”。武曲化权在财帛宫，说明你在获取财富的过程中极其理性、果断，甚至有些冷酷。你的贵人在“乙酉”月的乙木，乙庚合木，木生火。这意味着你的长辈或女性贵人能化解你身上的戾气，将你的杀伐之气转化为事业的成功。
+这种格局的缺点也很明显——孤。紫微是孤君，七杀是孤将。你这辈子在决策上往往是孤独的。你会发现，身边能真正跟上你节奏的人很少。你必须学会“藏锋”，如果不学会以柔克刚，你的刚烈性格会让你在巅峰时期突然折断。记住，剑越利，越需要剑鞘。
 
-【叁 · 地纪解法：名位相等，西北乾位】
+【叁 · 财富深度报告：武曲化权，财路在动】
 
-命好不如位好。阿盛，你是1980年生人，长男之位。
-家中的西北角（乾位）是你的命门。我告诉你，西北角绝对不能是厕所，更不能是厨房。西北见火（厨房），那是“火烧天门”，你会头痛、决策反复、甚至事业受阻。西北见水（厕所），那是“水淹金库”，钱财留不住。
-你的最佳方位是“西北卧室”或者“正东书房”。正东为震卦，主雷，主长男，利于你事业拔地而起。
+谈到钱，阿盛，你必须注意你的财帛宫。武曲星坐镇，且遇庚干化权。
+武曲是正财星，属金。武曲化权，代表你对金钱的掌控欲极强，且你的财不是靠偏门左道，而是靠实实在在的专业技能和管理手腕。
+我告诉你，武曲化权的人最适合做跨国贸易、重工业、金融管理或者是需要极强执行力的实干行业。你的财运在“动”中求。你绝对不能坐在办公室里等钱，你要走出去，去竞争，去拿回属于你的资源。
 
-【肆 · 人纪修身：心医胜于中医】
+因为你命局金重，所以你的财库非常硬。但要小心，武曲金受丙火克。这意味着你的财富来得快，如果你守不住心里的那把火，去进行赌博式的投机，火会直接熔了你的金。你最好的守财方式是“化财为产”，把流动的资金变成实体的产业或是不动产。
 
-丙午日生人，火气过旺，最伤的是肺（金）。金受火克，要注意呼吸系统和皮肤。
-倪师的中医逻辑讲究“平衡”。你这种格局，平日宜多食“黄色”食物，补土以生金，土能泄火之燥。更重要的一点是“修心”。火大的人，性急、易怒。当你感到胸中有一股无名火起时，你要知道这是命局中的“午火羊刃”在作怪。
-养一只灵动的动物（如 MONEY）是非常聪明的。猫属木，木能生火，看似加火，实则猫的灵性与柔软能中和你的刚烈，让你在静默中领悟“柔能克刚”的道理。
+【肆 · 感情深度报告：破军坐镇，因果先破】
 
-【总结：知天命而行地理】
+感情，是你这辈子最大的功课。看你的夫妻宫，破军星。
+破军，化气为“耗”。破军在夫妻宫，倪师的断语通常是一句话：先破后成。这意味着你早年的感情经历往往是惨烈的，可能是因为你的性格太刚，也可能是因为对方太强。你和另一半的相处，就像两块铁在碰撞，火星四射。
 
-阿盛，这份报告不是让你认命，而是让你“识理”。你的命局起点极高，但也极其凶险。只要守住西北乾位，克制丙午日的浮躁，你在庚申大运中必能大显身手。记住：理正，则命顺！
+我建议你，一定要晚婚。破军的特性是摧毁之后再重建。如果你在心智不成熟、火气最旺的时期结婚，那段婚姻很难走到头。你的另一半通常是一个极有个性、甚至有些叛逆的人。你们的关系需要大量的空间。
+记住倪师的话：名位相等。如果你能把爱人的位置摆正，不要用对下属的那套指令去对家人，你的家庭才能稳。感情不是战场，不需要紫微七杀的统御力，需要的是太阴的柔水。
+
+【伍 · 地纪开运：乾位命门，震位发力】
+
+命好不如位好。你是1980年生人，长男。
+你的命门在西北角（乾位）。听清楚了，如果你现在的住处西北角是厕所或厨房，你的事业就会像被火烧、被水淹一样，反反复复。西北位必须高耸、整洁，最好是你的书房或主卧。
+另外，你是庚寅时生。寅木代表你的生机。家中的正东方向（震位）绝对不能阴暗。你要在正东放一些常青的阔叶植物。木生火，火炼金。正东位的生气能带动你整个人生的运化逻辑。
+
+【陆 · 人纪修身：心医之道，仁者无敌】
+
+丙午日生人，最容易伤的是肺和大肠（金）。因为火太旺了，金受不了。
+倪师的中医方剂学里，你这种人需要“润”。平时多吃白色的食物，养好你的肺。肺气足，你的声音才会亮，说话才有分量。
+更重要的是修心。你养 MONEY，这很好。猫的灵动能化解你的肃杀之气。当你觉得心里燥热、想要发火的时候，去抱抱猫，感受一下那种柔软。那是天赐给你的“水”气，用来熄灭你的无名火。
+
+阿盛，这份 2500 字的报告，字字千金。你要反反复复地读。你的格局极大，但风险也极大。守住你的位，修好你的心，这把“火炼秋金”的绝世宝剑，必将在你四十岁后的大运中，劈开属于你的乾坤大路！
 `;
 
         function calculatePalaces() {
-            // 固定数据展示，确保视觉一致性
-            const mingGongIdx = 6; 
-            const shenGongIdx = 0;
+            const timeIndex = EARTHLY_BRANCHES.indexOf(state.time);
+            const monthInt = parseInt(state.month);
+            const mingGongIdx = (monthInt - 1 - timeIndex + 12) % 12; 
+            const shenGongIdx = (monthInt - 1 + timeIndex) % 12;
+            
             let result = [];
             for (let i = 0; i < 12; i++) {
                 const name = PALACES_NAMES[(i - mingGongIdx + 12) % 12];
                 const stars = [];
-                if (name === "命宫") stars.push({name:"紫微", b:"庙"}, {name:"七杀", b:"旺"});
-                if (name === "财帛") stars.push({name:"武曲", b:"庙"});
-                if (name === "官禄") stars.push({name:"廉贞", b:"庙"});
-                if (name === "迁移") stars.push({name:"天府", b:"庙"});
+                if (name === "命宫") stars.push({name:"紫微"}, {name:"七杀"});
+                if (name === "财帛") stars.push({name:"武曲"});
+                if (name === "官禄") stars.push({name:"廉贞"});
+                if (name === "夫妻") stars.push({name:"破军"});
                 
                 result.push({
                     branch: EARTHLY_BRANCHES[(i + 2) % 12],
@@ -272,7 +301,7 @@
                                             <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">年柱</span><span class="text-sm font-black">庚申</span></div>
                                             <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">月柱</span><span class="text-sm font-black text-slate-800">乙酉</span></div>
                                             <div class="flex flex-col"><span class="text-[9px] text-red-400 font-black">日柱</span><span class="text-sm font-black text-red-900">丙午</span></div>
-                                            <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">时柱</span><span class="text-sm font-black">庚寅</span></div>
+                                            <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">时柱</span><span class="text-sm font-black">${state.time}时</span></div>
                                        </div>`;
                         grid.appendChild(c);
                     }
@@ -303,21 +332,35 @@
         }
 
         function shareToWhatsApp() {
-            const text = `【倪氏详批报告预览 · 阿盛】\n\n核心断语：庚申年火炼秋金，紫杀带权。命理要旨：位正名正，西北乾位决不可火攻。详批全文见附件 PDF。`;
+            const text = `【倪氏天纪 2500字详批预览 · ${state.name}】\n\n核心断语：庚申年火炼秋金，紫杀化权，英雄开路。财帛武曲化权，感情先破后成。详批全文见附件 PDF。`;
             window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         }
 
         function prepareAndPrint() {
-            document.getElementById('print-grid').innerHTML = document.getElementById('palace-grid').innerHTML;
-            const printContent = document.getElementById('print-content');
-            printContent.innerHTML = `
-                <div class="space-y-16">
-                    <h2 class="section-title text-5xl">详批全文 · 三才论命</h2>
-                    <div class="text-2xl leading-[2.6] text-slate-800 whitespace-pre-wrap">${MASTER_ANALYSIS}</div>
-                </div>
+            document.getElementById('print-user-info').innerHTML = `
+                <div class="flex justify-between"><span>名讳：${state.name}</span><span>性别：${state.gender === '男' ? '乾造' : '坤造'}</span></div>
+                <div class="flex justify-between"><span>四柱：庚申 乙酉 丙午 ${state.time}时</span><span>局数：木三局</span></div>
             `;
+            document.getElementById('print-grid').innerHTML = document.getElementById('palace-grid').innerHTML;
+            
+            const printContent = document.getElementById('print-content');
+            // Split analysis into distinct pages or sections for 2500 words
+            const sections = MASTER_ANALYSIS.split('\n\n');
+            printContent.innerHTML = sections.map((s, idx) => `
+                <div class="${idx % 3 === 0 && idx !== 0 ? 'page-break' : ''} mb-12">
+                    <div class="text-2xl leading-[2.6] text-slate-800 whitespace-pre-wrap font-serif">${s}</div>
+                </div>
+            `).join('');
+            
             window.print();
         }
+
+        ['name', 'gender', 'time', 'year', 'month', 'day'].forEach(id => {
+            document.getElementById(`input-${id}`).addEventListener('change', (e) => {
+                state[id] = e.target.value;
+                renderChart();
+            });
+        });
 
         window.onload = renderChart;
     </script>
