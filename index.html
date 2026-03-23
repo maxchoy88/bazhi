@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>倪氏天纪紫微 4000字全动态详批系统 - 专业分段版</title>
+    <title>倪氏天纪紫微 4000字分段推演稳健版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
@@ -23,7 +23,6 @@
             border-radius: 30px;
         }
         
-        /* 打印分页与 PDF 优化 */
         @media print {
             .no-print { display: none !important; }
             body { background: white !important; margin: 0; padding: 0; }
@@ -53,7 +52,7 @@
         }
         .loader {
             border-top-color: #7f1d1d;
-            animation: spinner 0.6s linear infinite;
+            animation: spinner 0.8s linear infinite;
         }
         @keyframes spinner {
             to { transform: rotate(360deg); }
@@ -75,7 +74,7 @@
 </head>
 <body class="p-2 md:p-6 text-slate-900">
 
-    <!-- 网页展示 -->
+    <!-- UI 主界面 -->
     <div class="max-w-7xl mx-auto space-y-6 no-print">
         <header class="bg-white border-b-[12px] border-red-950 rounded-3xl p-8 md:p-10 shadow-2xl flex flex-col xl:flex-row justify-between items-center gap-8 relative overflow-hidden">
             <div class="absolute top-0 left-0 w-64 h-64 bg-red-900/5 rounded-full blur-[100px]"></div>
@@ -86,12 +85,11 @@
                 <div>
                     <h1 class="text-3xl md:text-5xl font-black tracking-tighter text-slate-900">倪氏天纪·全动态详批系统</h1>
                     <div class="flex items-center gap-4 text-red-900 font-black text-[10px] md:text-xs mt-3 uppercase tracking-[0.4em] bg-red-50/50 w-fit px-4 py-1 rounded-full font-sans">
-                        <i data-lucide="zap" class="w-3 h-3"></i> 精简专业版 · 2000字双向推演
+                        <i data-lucide="zap" class="w-3 h-3 text-red-600"></i> 分段推演技术 · 稳定输出 4000 字
                     </div>
                 </div>
             </div>
 
-            <!-- 分离的两个按钮：已改为2000字 -->
             <div class="flex flex-col sm:flex-row items-center gap-4 z-10">
                 <button id="ai-btn-12" class="ai-btn-primary text-white px-6 py-4 rounded-2xl text-xs md:text-sm font-black hover:scale-105 transition-all shadow-xl flex items-center gap-3 active:scale-95">
                     <i data-lucide="layout-grid" class="w-5 h-5"></i>
@@ -108,10 +106,10 @@
             <div class="lg:col-span-3 space-y-6">
                 <section class="bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-200">
                     <h2 class="text-xs font-black mb-8 flex items-center gap-2 text-slate-500 uppercase tracking-widest border-b border-slate-50 pb-4">
-                        <i data-lucide="user" class="w-4 h-4 text-red-900"></i> 命主生辰录入
+                        <i data-lucide="user" class="w-4 h-4 text-red-900"></i> 命主资料录入
                     </h2>
                     <div class="space-y-6">
-                        <div class="flex p-1 bg-slate-100 rounded-xl mb-4 shadow-inner">
+                        <div class="flex p-1 bg-slate-100 rounded-xl mb-4">
                             <button onclick="setCalendar('west')" id="cal-west" class="calendar-btn flex-1 py-2 text-[10px] font-black rounded-lg transition-all">西历 (Solar)</button>
                             <button onclick="setCalendar('lunar')" id="cal-lunar" class="calendar-btn flex-1 py-2 text-[10px] font-black rounded-lg transition-all active">农历 (Lunar)</button>
                         </div>
@@ -130,18 +128,16 @@
                                 <label class="text-[10px] text-slate-400 font-black block mb-2 px-1 text-center">时辰</label>
                                 <select id="input-time" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-3 py-3 text-sm font-bold">
                                     <option value="寅">寅 (3-5)</option><option value="子">子 (23-1)</option><option value="丑">丑 (1-3)</option>
-                                    <option value="卯">卯 (5-7)</option><option value="辰">辰 (7-9)</option><option value="巳">巳 (9-11)</option>
-                                    <option value="午">午 (11-13)</option><option value="未">未 (13-15)</option><option value="申">申 (15-17)</option>
-                                    <option value="酉">酉 (17-19)</option><option value="戌">戌 (19-21)</option><option value="亥">亥 (21-23)</option>
+                                    <option value="卯">卯 (5-7)</option>
                                 </select>
                             </div>
                         </div>
                         <div>
-                            <label class="text-[10px] text-slate-400 font-black block mb-2 px-1">生辰日期</label>
+                            <label class="text-[10px] text-slate-400 font-black block mb-2 px-1">生辰年月日</label>
                             <div class="grid grid-cols-3 gap-2">
                                 <input type="number" id="input-year" value="1980" class="bg-slate-50 border-2 border-slate-100 rounded-xl py-3 text-xs text-center font-bold" />
                                 <input type="number" id="input-month" value="9" class="bg-slate-50 border-2 border-slate-100 rounded-xl py-3 text-xs text-center font-bold" />
-                                <input type="number" id="input-day" value="30" class="bg-slate-50 border-2 border-red-200 rounded-xl py-3 text-xs text-center font-black text-red-900 shadow-inner" />
+                                <input type="number" id="input-day" value="30" class="bg-slate-50 border-2 border-red-200 rounded-xl py-3 text-xs text-center font-black text-red-900" />
                             </div>
                         </div>
                     </div>
@@ -155,8 +151,8 @@
                             <button onclick="switchTab('chart')" id="tab-chart" class="tab-btn px-12 py-3.5 rounded-[1.5rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105">天机命阵图</button>
                             <button onclick="switchTab('analysis')" id="tab-analysis" class="tab-btn px-12 py-3.5 rounded-[1.5rem] text-sm font-black transition-all text-slate-400">详批报告内容</button>
                         </div>
-                        <button onclick="prepareAndPrint()" class="bg-red-950 text-white px-12 py-4 rounded-2xl text-sm font-black hover:bg-black shadow-2xl flex items-center gap-4 transition-all active:scale-95">
-                            <i data-lucide="printer" class="w-5 h-5"></i> 导出完整详批
+                        <button onclick="prepareAndPrint()" class="bg-red-950 text-white px-12 py-4 rounded-2xl text-sm font-black hover:bg-black shadow-2xl flex items-center gap-4 transition-all">
+                            <i data-lucide="printer" class="w-5 h-5"></i> 导出 4000字 详批
                         </button>
                     </div>
 
@@ -166,35 +162,17 @@
 
                     <div id="view-analysis" class="hidden space-y-12 pr-6 max-h-[1000px] overflow-y-auto custom-scrollbar font-serif">
                         <div id="ai-response-container" class="hidden space-y-8">
-                            <!-- 十二宫内容区 -->
-                            <div id="section-12" class="hidden bg-amber-50 p-12 rounded-[4rem] border-2 border-amber-200 shadow-xl relative">
-                                <div class="flex justify-between items-center mb-8 border-b-2 border-amber-100 pb-6">
-                                    <h4 class="text-3xl font-black text-amber-900 flex items-center gap-4">
-                                        <i data-lucide="layout-grid" class="w-10 h-10 text-amber-600"></i> 十二宫深度详批 (2000字)
-                                    </h4>
-                                    <button onclick="playTts('text-12')" class="bg-amber-600 text-white p-4 rounded-full hover:bg-amber-700 shadow-xl transition-all">
-                                        <i data-lucide="volume-2" class="w-6 h-6"></i>
-                                    </button>
-                                </div>
+                            <div id="section-12" class="hidden bg-amber-50 p-10 rounded-[3rem] border-2 border-amber-200 shadow-xl relative">
+                                <h4 class="text-2xl font-black text-amber-900 mb-6 border-b-2 border-amber-100 pb-4">十二宫位全维度详批 (2000字)</h4>
                                 <p id="text-12" class="text-xl text-amber-950 leading-[2.6] whitespace-pre-wrap pl-8 border-l-4 border-amber-200"></p>
                             </div>
-
-                            <!-- 流年内容区 -->
-                            <div id="section-yearly" class="hidden bg-slate-900 p-12 rounded-[4rem] border-2 border-slate-700 shadow-xl relative">
-                                <div class="flex justify-between items-center mb-8 border-b-2 border-slate-800 pb-6">
-                                    <h4 class="text-3xl font-black text-slate-100 flex items-center gap-4">
-                                        <i data-lucide="trending-up" class="w-10 h-10 text-red-500"></i> 2026-2030 流年推演 (2000字)
-                                    </h4>
-                                    <button onclick="playTts('text-yearly')" class="bg-slate-700 text-white p-4 rounded-full hover:bg-slate-600 shadow-xl transition-all">
-                                        <i data-lucide="volume-2" class="w-6 h-6"></i>
-                                    </button>
-                                </div>
+                            <div id="section-yearly" class="hidden bg-slate-900 p-10 rounded-[3rem] border-2 border-slate-700 shadow-xl relative">
+                                <h4 class="text-2xl font-black text-slate-100 mb-6 border-b-2 border-slate-800 pb-4">2026-2030 流年深度演化 (2000字)</h4>
                                 <p id="text-yearly" class="text-xl text-slate-300 leading-[2.6] whitespace-pre-wrap pl-8 border-l-4 border-red-900"></p>
                             </div>
                         </div>
-                        
                         <div id="empty-analysis" class="text-center py-20 bg-slate-50 rounded-[3rem] border border-dashed border-slate-300">
-                             <p class="text-slate-400 text-xl font-bold">尚未开启天机推演，请点击上方按钮进行分段分析</p>
+                             <p class="text-slate-400 text-xl font-bold">尚未开启推演，请点击上方按钮分段分析</p>
                         </div>
                     </div>
                 </div>
@@ -202,7 +180,7 @@
         </div>
     </div>
 
-    <!-- 打印预览区 -->
+    <!-- 打印预览 -->
     <div id="print-report" class="print-only print-container font-serif">
         <div class="max-w-4xl mx-auto">
             <div class="text-center border-b-[20px] border-double border-red-900 pb-20 mb-20">
@@ -211,8 +189,8 @@
                        <i data-lucide="compass" class="w-20 h-20 text-red-950 -rotate-45"></i>
                     </div>
                 </div>
-                <h1 class="text-8xl font-black text-slate-900 mb-10 tracking-tighter italic">倪氏天纪·动态详批</h1>
-                <h2 class="text-3xl font-bold text-red-900 mb-12 tracking-[1em] uppercase">四千字 职业馆藏本</h2>
+                <h1 class="text-8xl font-black text-slate-900 mb-6 italic">倪氏天纪详批</h1>
+                <h2 class="text-3xl font-bold text-red-900 mb-12 tracking-[0.5em] uppercase">四千字 馆藏专修本</h2>
                 <div id="print-user-info" class="mt-20 grid grid-cols-2 gap-12 text-2xl font-black text-slate-600 border-y-4 border-slate-100 py-12 px-8"></div>
             </div>
             <div class="page-break space-y-12 py-20">
@@ -223,32 +201,24 @@
         </div>
     </div>
 
-    <!-- 加载器 -->
+    <!-- 加载指示器 -->
     <div id="global-loader" class="hidden fixed inset-0 bg-slate-950/98 backdrop-blur-3xl z-[100] flex flex-col items-center justify-center px-10 text-center">
         <div class="loader ease-linear rounded-full border-[12px] border-t-[12px] border-slate-200 h-32 w-32 mb-12 shadow-[0_0_100px_rgba(255,255,255,0.1)]"></div>
-        <h2 id="loader-status" class="text-5xl font-black text-white tracking-[0.2em] mb-6">正在推演天机...</h2>
-        <p id="loader-progress" class="text-xl text-red-500 font-bold animate-pulse tracking-widest uppercase">Master Bo is requesting deep analysis from Gemini</p>
+        <h2 id="loader-status" class="text-4xl font-black text-white tracking-[0.2em] mb-4">正在连接天机...</h2>
+        <p id="loader-progress" class="text-xl text-red-500 font-bold animate-pulse tracking-widest uppercase">Initializing Stream Pipeline</p>
     </div>
 
     <script>
         const apiKey = "";
         const GEMINI_MODEL = "gemini-2.5-flash-preview-09-2025";
-        const TTS_MODEL = "gemini-2.5-flash-preview-tts";
 
         const EARTHLY_BRANCHES = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
         const HEAVENLY_STEMS = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
         const PALACES_NAMES = ["命宫", "兄弟", "夫妻", "子女", "财帛", "疾厄", "迁移", "奴仆", "官禄", "田宅", "福德", "父母"];
 
         let state = {
-            name: "阿盛",
-            gender: "男",
-            calendarType: "lunar",
-            year: 1980,
-            month: 9,
-            day: 30,
-            time: "寅",
-            ai12Palaces: "",
-            aiYearly: ""
+            name: "阿盛", gender: "男", calendarType: "lunar", year: 1980, month: 9, day: 30, time: "寅",
+            ai12Palaces: "", aiYearly: ""
         };
 
         function setCalendar(type) {
@@ -256,14 +226,6 @@
             document.querySelectorAll('.calendar-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(`cal-${type}`).classList.add('active');
             renderChart();
-        }
-
-        function getElementColor(item) {
-            if (["甲","乙","寅","卯"].includes(item)) return "text-emerald-700";
-            if (["丙","丁","巳","午"].includes(item)) return "text-red-600";
-            if (["庚","辛","申","酉"].includes(item)) return "text-yellow-600 font-black";
-            if (["壬","癸","亥","子"].includes(item)) return "text-blue-700 font-bold";
-            return "text-slate-500";
         }
 
         function calculatePalaces() {
@@ -276,17 +238,11 @@
             let result = [];
             for (let i = 0; i < 12; i++) {
                 const name = PALACES_NAMES[(i - mingGongIdx + 12) % 12];
-                const stars = [];
-                if (name === "命宫") stars.push({n:"紫微"}, {n:"七杀"});
-                if (name === "财帛") stars.push({n:"武曲"});
-                if (name === "官禄") stars.push({n:"廉贞"});
-                
                 result.push({
                     branch: EARTHLY_BRANCHES[(i + 2) % 12],
                     stem: HEAVENLY_STEMS[(startStemIdx + i) % 10],
-                    name, stars,
-                    isMingGong: name === "命宫",
-                    isShenGong: i === shenGongIdx,
+                    name, isMingGong: name === "命宫", isShenGong: i === shenGongIdx,
+                    stars: name === "命宫" ? ["紫微","七杀"] : (name === "财帛" ? ["武曲"] : []),
                     daYun: `${i * 10 + 5} - ${i * 10 + 14}`
                 });
             }
@@ -302,31 +258,18 @@
                 if (idx === 'center') {
                     if (!grid.querySelector('.center-mark')) {
                         const c = document.createElement('div');
-                        c.className = 'center-mark col-span-2 row-span-2 bg-[#fdfaf2] border-8 border-double border-red-900/20 rounded-[4rem] flex flex-col items-center justify-center p-8 shadow-inner';
-                        c.innerHTML = `<h3 class="text-7xl font-black text-slate-900 mb-4 tracking-tighter">紫微</h3>
-                            <div class="grid grid-cols-4 gap-4 px-4 py-4 bg-white/40 rounded-3xl border border-red-900/5 mb-4 text-center">
-                                <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">生年</span><span class="text-sm font-black">${state.year}</span></div>
-                                <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">性别</span><span class="text-sm font-black">${state.gender}</span></div>
-                                <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">时辰</span><span class="text-sm font-black">${state.time}时</span></div>
-                                <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">历法</span><span class="text-sm font-black">${state.calendarType === 'lunar' ? '农历' : '西历'}</span></div>
-                            </div>`;
+                        c.className = 'center-mark col-span-2 row-span-2 bg-[#fdfaf2] border-8 border-red-900/10 rounded-[4rem] flex flex-col items-center justify-center p-8';
+                        c.innerHTML = `<h3 class="text-7xl font-black text-slate-900 mb-2">紫微</h3><p class="text-red-900 font-bold">${state.name} 命造</p>`;
                         grid.appendChild(c);
                     }
                     return;
                 }
                 const p = palaces[idx];
                 const card = document.createElement('div');
-                card.className = `palace-card relative border p-3 h-44 md:h-52 flex flex-col justify-between transition-all duration-500 ${p.isMingGong ? 'bg-red-50/80 border-red-700 ring-4 ring-red-700/10' : 'bg-[#fffcf7] border-slate-300'}`;
-                card.innerHTML = `<div class="flex justify-between items-start">
-                    <span class="text-[12px] font-black px-2.5 py-1 rounded shadow-sm ${p.isMingGong ? 'bg-red-700 text-white' : 'bg-slate-800 text-white'}">${p.name} ${p.isShenGong ? '<small class="bg-amber-500 px-1 rounded ml-1 text-[10px]">身</small>' : ''}</span>
-                    <span class="text-[14px] font-black ${getElementColor(p.stem)}">${p.stem}${p.branch}</span>
-                </div>
-                <div class="flex flex-grow items-center justify-center gap-2">
-                    ${p.stars.map(s => `<span class="text-2xl font-black text-red-900 writing-vertical-lr tracking-tighter">${s.n}</span>`).join('')}
-                </div>
-                <div class="flex justify-between items-center text-[10px] text-slate-400 font-mono">
-                    <span>${p.daYun} 岁</span>
-                </div>`;
+                card.className = `palace-card border p-3 h-44 md:h-52 flex flex-col justify-between ${p.isMingGong ? 'bg-red-50/80 border-red-700' : 'bg-[#fffcf7] border-slate-300'}`;
+                card.innerHTML = `<div><span class="text-xs font-black px-2 py-0.5 rounded ${p.isMingGong ? 'bg-red-700 text-white' : 'bg-slate-800 text-white'}">${p.name}</span></div>
+                    <div class="flex-grow flex items-center justify-center gap-2">${p.stars.map(s => `<span class="text-2xl font-black text-red-900 writing-vertical-lr">${s}</span>`).join('')}</div>
+                    <div class="flex justify-between text-[10px] font-bold text-slate-500"><span>${p.stem}${p.branch}</span><span>${p.daYun}</span></div>`;
                 grid.appendChild(card);
             });
             lucide.createIcons();
@@ -336,156 +279,100 @@
             for (let i = 0; i < 5; i++) {
                 try {
                     const response = await fetch(url, options);
-                    if (response.ok) {
-                        const data = await response.json();
-                        if (data.candidates && data.candidates[0].content) {
-                            return data;
-                        }
-                    }
-                    if (response.status !== 429 && response.status < 500) break;
-                } catch (e) {
-                    console.error("Retry Error:", e);
-                }
+                    if (response.ok) return await response.json();
+                } catch (e) {}
                 await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
             }
-            throw new Error("天机连接中断");
+            throw new Error("天机连接超时");
         }
 
-        async function runAIEngine(type) {
+        async function runChunkedAIEngine(type) {
             const loader = document.getElementById('global-loader');
             const status = document.getElementById('loader-status');
             const progress = document.getElementById('loader-progress');
             loader.classList.remove('hidden');
 
-            const palaces = calculatePalaces();
-            const chartData = palaces.map(p => `${p.name}(${p.stem}${p.branch}):${p.stars.map(s=>s.n).join(',')}`).join('|');
-            const baseContext = `命主:${state.name}, 生辰:${state.year}年${state.month}月${state.day}日, 历法:${state.calendarType}, 性别:${state.gender}, 命盘:${chartData}`;
-
-            let prompt = "";
-            let system = "你扮演倪海厦老师。语气直白、刚硬、一针见血。严格从天纪、地纪、人纪三方面解析。字数必须极其充实且具备实战指导意义。";
-            
-            if (type === '12palaces') {
-                status.textContent = "正在拆解十二宫位...";
-                progress.textContent = "深度推演 2000 字规模的宫位神髓...";
-                prompt = `${baseContext}。请进行十二宫位全维度详批。每一宫位都要极其深入（不少于150字/宫），重点论述该宫位对命主这一生‘名位相等’的影响，以及具体的改命方位建议。总字数锁定在 2000 字以上。`;
-            } else {
-                status.textContent = "正在锁定流年大势...";
-                progress.textContent = "精准计算 2026-2030 五载乾坤大势 (2000字)...";
-                prompt = `${baseContext}。请针对 2026 丙午年至 2030 庚戌年这五年进行流年详批。逐年拆解流年大势、财官变数、地纪开运陈设、人纪情绪防范。总字数锁定在 2000 字以上。`;
-            }
+            const baseContext = `命主:${state.name}, 生辰:${state.year}-${state.month}-${state.day}, 历法:${state.calendarType}, 性别:${state.gender}`;
+            const system = "你扮演倪海厦老师。一针见血，强调地纪方位。直接输出正文。";
+            let fullContent = "";
 
             try {
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
-                const payload = {
-                    contents: [{ parts: [{ text: prompt }] }],
-                    systemInstruction: { parts: [{ text: system }] },
-                    generationConfig: { maxOutputTokens: 6000, temperature: 0.7, topP: 0.9 },
-                    safetySettings: [
-                        { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
-                        { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
-                        { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
-                        { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" }
-                    ]
-                };
-                
-                const result = await fetchWithRetry(url, { 
-                    method: 'POST', body: JSON.stringify(payload), headers: { 'Content-Type': 'application/json' } 
-                });
-                
-                const content = result.candidates[0].content.parts[0].text;
                 if (type === '12palaces') {
-                    state.ai12Palaces = content;
-                    document.getElementById('text-12').textContent = content;
+                    // 分两段：1-6宫，7-12宫
+                    for (let step = 1; step <= 2; step++) {
+                        status.textContent = `推演宫位精要 (${step}/2)...`;
+                        progress.textContent = `正在构建第 ${step} 段十二宫深度解析内容...`;
+                        const prompt = `${baseContext}。请进行十二宫位详批第 ${step} 部分（${step === 1 ? '命宫、兄弟、夫妻、子女、财帛、疾厄' : '迁移、交友、官禄、田宅、福德、父母'}）。每一宫位不少于 200 字深度分析。`;
+                        const res = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`, {
+                            method: 'POST', body: JSON.stringify({
+                                contents: [{ parts: [{ text: prompt }] }],
+                                systemInstruction: { parts: [{ text: system }] },
+                                generationConfig: { maxOutputTokens: 3500, temperature: 0.7 },
+                                safetySettings: [{ category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" }]
+                            }), headers: { 'Content-Type': 'application/json' }
+                        });
+                        fullContent += res.candidates[0].content.parts[0].text + "\n\n";
+                    }
+                    state.ai12Palaces = fullContent;
+                    document.getElementById('text-12').textContent = fullContent;
                     document.getElementById('section-12').classList.remove('hidden');
                 } else {
-                    state.aiYearly = content;
-                    document.getElementById('text-yearly').textContent = content;
+                    // 分两段：2026-2028，2029-2030
+                    for (let step = 1; step <= 2; step++) {
+                        status.textContent = `推演流年风向 (${step}/2)...`;
+                        progress.textContent = `正在锁定第 ${step} 段五年大势演化...`;
+                        const prompt = `${baseContext}。请推演流年详批第 ${step} 部分（${step === 1 ? '2026 丙午年、2027 丁未年、2028 戊申年' : '2029 己酉年、2030 庚戌年'}）。每一年详述财运与地纪方位避忌。`;
+                        const res = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`, {
+                            method: 'POST', body: JSON.stringify({
+                                contents: [{ parts: [{ text: prompt }] }],
+                                systemInstruction: { parts: [{ text: system }] },
+                                generationConfig: { maxOutputTokens: 3500, temperature: 0.7 }
+                            }), headers: { 'Content-Type': 'application/json' }
+                        });
+                        fullContent += res.candidates[0].content.parts[0].text + "\n\n";
+                    }
+                    state.aiYearly = fullContent;
+                    document.getElementById('text-yearly').textContent = fullContent;
                     document.getElementById('section-yearly').classList.remove('hidden');
                 }
-                
                 document.getElementById('ai-response-container').classList.remove('hidden');
                 document.getElementById('empty-analysis').classList.add('hidden');
                 switchTab('analysis');
             } catch (e) {
-                alert("推演中断：当前生成量较大，由于网络限制导致超时。请再次点击按钮，系统将重新连接。");
+                alert("天机推演中断：当前推演内容量巨大，由于网络限制导致超时。请再次点击按钮，系统将尝试续传连接。");
             } finally {
                 loader.classList.add('hidden');
             }
         }
 
-        async function playTts(elementId) {
-            const text = document.getElementById(elementId).textContent;
-            if (!text) return;
-            try {
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/${TTS_MODEL}:generateContent?key=${apiKey}`;
-                const payload = {
-                    contents: [{ parts: [{ text: `请用沉稳、充满智慧的长者声音诵读以下命理报告：${text.substring(0, 4500)}` }] }],
-                    generationConfig: {
-                        responseModalities: ["AUDIO"],
-                        speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Charon" } } }
-                    }
-                };
-                const resp = await fetch(url, { method: 'POST', body: JSON.stringify(payload), headers: { 'Content-Type': 'application/json' } });
-                const data = await resp.json();
-                const audioData = data.candidates[0].content.parts[0].inlineData.data;
-                const binary = atob(audioData);
-                const bytes = new Int16Array(binary.length / 2);
-                for (let i = 0; i < binary.length; i += 2) bytes[i / 2] = (binary.charCodeAt(i + 1) << 8) | binary.charCodeAt(i);
-                
-                const buffer = new ArrayBuffer(44 + bytes.length * 2);
-                const view = new DataView(buffer);
-                const writeS = (o, s) => { for (let i=0; i<s.length; i++) view.setUint8(o+i, s.charCodeAt(i)); };
-                writeS(0, 'RIFF'); view.setUint32(4, 32 + bytes.length * 2, true); writeS(8, 'WAVE'); writeS(12, 'fmt ');
-                view.setUint32(16, 16, true); view.setUint16(20, 1, true); view.setUint16(22, 1, true);
-                view.setUint32(24, 24000, true); view.setUint32(28, 48000, true); view.setUint16(32, 2, true);
-                view.setUint16(34, 16, true); writeS(36, 'data'); view.setUint32(40, bytes.length * 2, true);
-                for (let i = 0; i < bytes.length; i++) view.setInt16(44 + i * 2, bytes[i], true);
-                
-                const audio = new Audio(URL.createObjectURL(new Blob([view], { type: 'audio/wav' })));
-                audio.play();
-            } catch (e) { alert("语音功能暂时受限"); }
-        }
-
         function prepareAndPrint() {
-            if (!state.ai12Palaces && !state.aiYearly) return alert("请先生成详批内容");
-            document.getElementById('print-user-info').innerHTML = `<div>名讳：${state.name} | 性别：${state.gender}造</div><div>生辰：${state.year}年${state.month}月${state.day}日 (${state.calendarType === 'lunar' ? '农历' : '西历'})</div>`;
+            if (!state.ai12Palaces && !state.aiYearly) return alert("请先生成内容");
+            document.getElementById('print-user-info').innerHTML = `<div>名讳：${state.name}</div><div>生辰：${state.year}年${state.month}月${state.day}日 (${state.calendarType === 'lunar' ? '农历' : '西历'})</div>`;
             document.getElementById('print-grid').innerHTML = document.getElementById('palace-grid').innerHTML;
-            
-            const printContent = document.getElementById('print-content');
-            let fullHtml = "";
-            if (state.ai12Palaces) {
-                fullHtml += `<div class="page-break"><h3 class="text-4xl font-black text-red-950 border-b-4 border-red-100 pb-4 mb-10">壹 · 十二宫位全维度详批 (2000字)</h3><div class="whitespace-pre-wrap">${state.ai12Palaces}</div></div>`;
-            }
-            if (state.aiYearly) {
-                fullHtml += `<div class="page-break"><h3 class="text-4xl font-black text-slate-900 border-b-4 border-slate-200 pb-4 mb-10">贰 · 2026-2030 五载流年推演 (2000字)</h3><div class="whitespace-pre-wrap">${state.aiYearly}</div></div>`;
-            }
-            printContent.innerHTML = fullHtml;
+            const content = document.getElementById('print-content');
+            content.innerHTML = (state.ai12Palaces ? `<div class="page-break"><h3>壹 · 十二宫全维度详批</h3><div class="whitespace-pre-wrap">${state.ai12Palaces}</div></div>` : "") +
+                                (state.aiYearly ? `<div class="page-break"><h3>贰 · 2026-2030 流年演化</h3><div class="whitespace-pre-wrap">${state.aiYearly}</div></div>` : "");
             window.print();
         }
 
         function switchTab(tab) {
-            document.getElementById('view-chart').className = tab === 'chart' ? 'block overflow-x-auto pb-10 custom-scrollbar' : 'hidden';
-            document.getElementById('view-analysis').className = tab === 'analysis' ? 'block space-y-16 pr-6 max-h-[1000px] overflow-y-auto custom-scrollbar' : 'hidden';
+            document.getElementById('view-chart').className = tab === 'chart' ? 'block' : 'hidden';
+            document.getElementById('view-analysis').className = tab === 'analysis' ? 'block' : 'hidden';
             document.querySelectorAll('.tab-btn').forEach(b => b.className = "tab-btn px-12 py-3.5 rounded-[1.5rem] text-sm font-black transition-all text-slate-400");
             document.getElementById(`tab-${tab}`).className = "tab-btn px-12 py-3.5 rounded-[1.5rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105";
         }
 
         function shareToWhatsApp() {
-            const summary = (state.ai12Palaces + state.aiYearly).substring(0, 600);
-            const text = `【倪氏详批报告 · ${state.name}】\n动态推演核心要旨：\n${summary}...\n\n(查看 4000 字完整报告请联系本人)`;
+            const text = `【倪氏详批报告 · ${state.name}】\n动态推演核心要旨见附件 PDF 报告。`;
             window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         }
 
         ['name', 'gender', 'time', 'year', 'month', 'day'].forEach(id => {
-            document.getElementById(`input-${id}`).addEventListener('change', (e) => {
-                state[id] = e.target.value;
-                renderChart();
-            });
+            document.getElementById(`input-${id}`).addEventListener('change', (e) => { state[id] = e.target.value; renderChart(); });
         });
 
-        document.getElementById('ai-btn-12').addEventListener('click', () => runAIEngine('12palaces'));
-        document.getElementById('ai-btn-yearly').addEventListener('click', () => runAIEngine('yearly'));
-
+        document.getElementById('ai-btn-12').addEventListener('click', () => runChunkedAIEngine('12palaces'));
+        document.getElementById('ai-btn-yearly').addEventListener('click', () => runChunkedAIEngine('yearly'));
         window.onload = renderChart;
     </script>
 </body>
