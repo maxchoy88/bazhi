@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>倪氏天纪紫微 2000字详批分享版</title>
+    <title>倪氏天纪紫微 2000字详批终极版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
@@ -75,15 +75,15 @@
                 <div>
                     <h1 class="text-4xl md:text-5xl font-black tracking-tighter text-slate-900">倪氏天纪·2000字详批系统</h1>
                     <div class="flex items-center gap-4 text-red-900 font-black text-xs mt-3 uppercase tracking-[0.4em] bg-red-50/50 w-fit px-3 py-1 rounded-full">
-                        <i data-lucide="share-2" class="w-3 h-3"></i> 支持 WhatsApp 一键分享
+                        <i data-lucide="award" class="w-3 h-3"></i> 职业版 · 支持 WhatsApp 导出
                     </div>
                 </div>
             </div>
 
             <div class="flex flex-col items-center gap-3 z-10">
-                <button id="ai-btn" class="bg-red-800 text-white px-8 py-3 rounded-2xl text-sm font-black hover:bg-black transition-all shadow-xl flex items-center gap-3">
+                <button id="ai-btn" class="bg-red-800 text-white px-8 py-3 rounded-2xl text-sm font-black hover:bg-black transition-all shadow-xl flex items-center gap-3 active:scale-95">
                     <i data-lucide="sparkles" class="w-4 h-4"></i>
-                    生成 2000字 深度解盘 ✨
+                    开启 2000字 天机推演 ✨
                 </button>
             </div>
         </header>
@@ -93,7 +93,7 @@
             <div class="lg:col-span-3 space-y-4">
                 <section class="bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-200">
                     <h2 class="text-xs font-black mb-8 flex items-center gap-2 text-slate-500 uppercase tracking-widest border-b border-slate-50 pb-4">
-                        <i data-lucide="user" class="w-4 h-4 text-red-900"></i> 命主资料
+                        <i data-lucide="user" class="w-4 h-4 text-red-900"></i> 命主资料录入
                     </h2>
                     <div class="space-y-6">
                         <div>
@@ -111,10 +111,10 @@
                             <div>
                                 <label class="text-[11px] font-black text-slate-400 block mb-2">时辰</label>
                                 <select id="input-time" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-4 py-4 text-sm font-bold">
-                                    <option value="寅">寅时</option>
-                                    <option value="子">子时</option>
-                                    <option value="丑">丑时</option>
-                                    <option value="卯">卯时</option>
+                                    <option value="寅">寅时 (3-5)</option>
+                                    <option value="子">子时 (23-1)</option>
+                                    <option value="丑">丑时 (1-3)</option>
+                                    <option value="卯">卯时 (5-7)</option>
                                 </select>
                             </div>
                         </div>
@@ -129,9 +129,8 @@
                     </div>
                 </section>
                 <section class="bg-red-950 rounded-[2.5rem] p-10 text-red-50 shadow-2xl relative overflow-hidden">
-                    <i data-lucide="quote" class="absolute -right-4 -bottom-4 w-24 h-24 text-white/5"></i>
-                    <h2 class="text-xs font-black mb-6 text-red-400 uppercase tracking-widest">倪师语录</h2>
-                    <p class="text-sm leading-relaxed italic opacity-80 font-serif">“我命由我不由天，但你得先懂得你的天命。”</p>
+                    <h2 class="text-xs font-black mb-6 text-red-400 uppercase tracking-widest">倪师口诀</h2>
+                    <p class="text-sm leading-relaxed italic opacity-80 font-serif">“算命不是迷信，是环境与心理的数学。2000字之详批，助你掌握乾坤。”</p>
                 </section>
             </div>
 
@@ -140,12 +139,12 @@
                 <div class="bg-white rounded-[3rem] p-6 md:p-12 shadow-2xl border border-slate-200 min-h-[800px]">
                     <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
                         <div class="flex p-2 bg-slate-100 rounded-[2.5rem] shadow-inner">
-                            <button onclick="switchTab('chart')" id="tab-chart" class="tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105">命造布阵</button>
-                            <button onclick="switchTab('analysis')" id="tab-analysis" class="tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-400">深度报告</button>
+                            <button onclick="switchTab('chart')" id="tab-chart" class="tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105">命造排盘</button>
+                            <button onclick="switchTab('analysis')" id="tab-analysis" class="tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-400">2000字详批</button>
                         </div>
                         <div class="flex gap-4">
-                            <button onclick="prepareAndPrint()" class="bg-slate-900 text-white px-8 py-4 rounded-2xl text-sm font-black hover:bg-black shadow-xl flex items-center gap-4 transition-all">
-                                <i data-lucide="file-text" class="w-5 h-5 text-red-500"></i> 导出 PDF
+                            <button onclick="prepareAndPrint()" class="bg-red-950 text-white px-12 py-4 rounded-2xl text-sm font-black hover:bg-black shadow-xl flex items-center gap-4 transition-all">
+                                <i data-lucide="printer" class="w-5 h-5"></i> 导出 PDF 深入报告
                             </button>
                         </div>
                     </div>
@@ -161,7 +160,7 @@
                             <div class="bg-amber-50 p-10 rounded-[3rem] border-2 border-amber-200 shadow-xl relative">
                                 <div class="flex justify-between items-center mb-8">
                                     <h4 class="text-3xl font-black text-amber-900 flex items-center gap-3">
-                                        <i data-lucide="pen-tool" class="w-8 h-8 text-amber-600"></i> 倪师 AI 2000字详批 ✨
+                                        <i data-lucide="feather" class="w-8 h-8 text-amber-600"></i> 倪师 AI 2000字详解 ✨
                                     </h4>
                                     <div class="flex gap-3">
                                         <button id="whatsapp-btn" class="bg-green-600 text-white px-6 py-3 rounded-2xl text-sm font-black flex items-center gap-2 hover:bg-green-700 shadow-lg">
@@ -182,7 +181,7 @@
         </div>
     </div>
 
-    <!-- 打印预览区 (导出PDF的核心内容) -->
+    <!-- 打印预览区 -->
     <div id="print-report" class="print-only print-container font-serif">
         <div class="max-w-4xl mx-auto">
             <!-- 封面 -->
@@ -193,45 +192,37 @@
                     </div>
                 </div>
                 <h1 class="text-8xl font-black text-slate-900 mb-8 tracking-tighter">倪氏三才深入详批</h1>
-                <h2 class="text-3xl font-bold text-red-900 mb-12 tracking-[0.8em] uppercase">2000字馆藏级别报告</h2>
+                <h2 class="text-3xl font-bold text-red-900 mb-12 tracking-[0.8em] uppercase">2000字职业批本</h2>
                 <div id="print-user-info" class="mt-20 grid grid-cols-2 gap-12 text-2xl font-black text-slate-600 border-y-4 border-slate-100 py-12 px-8"></div>
             </div>
 
             <!-- 命盘页 -->
             <div class="page-break space-y-12 py-20">
-                <h2 class="text-4xl font-black border-l-[16px] border-red-950 pl-10 mb-16">乾坤命造大图</h2>
+                <h2 class="text-4xl font-black border-l-[16px] border-red-950 pl-10 mb-16">命理布阵大图</h2>
                 <div id="print-grid" class="grid grid-cols-4 grid-rows-4 gap-3 border-4 border-slate-300 p-6 rounded-[3rem] bg-[#fdfaf2] shadow-inner"></div>
                 <div class="text-center text-slate-400 mt-10 font-bold tracking-widest italic space-y-2">
-                    <p>※ 备注：此图根据倪氏天纪法门排布 ※</p>
                     <p>生辰基准：庚申年 乙酉月 丙午日 庚寅时</p>
                 </div>
             </div>
 
-            <!-- 正文长白页 -->
+            <!-- 正文 -->
             <div class="space-y-20 py-20">
-                <div id="print-content" class="report-text space-y-16">
-                    <!-- JS 动态填充内容 -->
-                </div>
+                <div id="print-content" class="report-text space-y-16"></div>
             </div>
 
             <!-- 封底 -->
             <div class="mt-40 pt-24 border-t-8 border-double border-slate-100 text-center text-slate-300">
-                <p class="text-4xl italic mb-16 text-slate-400">“理正则命顺，心医胜中医，位正万事兴。”</p>
-                <div class="flex justify-center gap-12 opacity-10 grayscale mb-16">
-                    <i data-lucide="shield" class="w-12 h-12"></i>
-                    <i data-lucide="compass" class="w-24 h-24"></i>
-                    <i data-lucide="award" class="w-12 h-12"></i>
-                </div>
+                <p class="text-4xl italic mb-16 text-slate-400">“心医胜中医，位正方能命顺。”</p>
                 <p class="text-sm font-black tracking-[2em] uppercase">— 谨志于 公元二零二六 庚申年 —</p>
             </div>
         </div>
     </div>
 
     <!-- 加载器 -->
-    <div id="global-loader" class="hidden fixed inset-0 bg-slate-900/95 backdrop-blur-2xl z-[100] flex flex-col items-center justify-center text-center px-6">
+    <div id="global-loader" class="hidden fixed inset-0 bg-slate-900/98 backdrop-blur-3xl z-[100] flex flex-col items-center justify-center text-center px-6">
         <div class="loader ease-linear rounded-full border-8 border-t-8 border-slate-200 h-28 w-28 mb-10 shadow-[0_0_50px_rgba(255,255,255,0.1)]"></div>
-        <h2 class="text-4xl font-black text-white tracking-widest mb-4">正在推演 2000 字天地人详批...</h2>
-        <p class="text-xl text-red-400 font-bold animate-pulse">倪师正在观星布阵，请耐心等待天机显现</p>
+        <h2 class="text-4xl font-black text-white tracking-widest mb-4">正在进行 2000 字命理推演...</h2>
+        <p class="text-xl text-red-500 font-bold animate-pulse">倪师正在观星排阵，天机深奥，请耐心等待 10-20 秒</p>
     </div>
 
     <script>
@@ -331,45 +322,75 @@
 
         function updateAnalysisUI() {
             const container = document.getElementById('static-analysis');
-            container.innerHTML = `
+            const content = `
                 <div class="bg-[#fffdf9] p-12 rounded-[4rem] border-2 border-slate-100 shadow-2xl">
-                    <h4 class="text-3xl font-black text-red-950 mb-10 border-b-4 border-red-50 pb-6">倪师三才要略 (静态分析)</h4>
+                    <h4 class="text-3xl font-black text-red-950 mb-10 border-b-4 border-red-50 pb-6">倪师三才要略</h4>
                     <div class="space-y-10 text-xl leading-[2.6] text-slate-800 font-serif">
-                        <p><strong>天纪格局：</strong> 阿盛，您生于庚申金年、乙酉金月。此为金气极旺之局。丙午日元属火，火炼秋金，主人生需历经艰辛方能显贵。紫微七杀在命，属于“极向离明”之变格，武曲化权坐财帛，说明您对金钱掌控欲极强，具备开创性财富的能力。</p>
-                        <p><strong>地纪建议：</strong> 1980年生长男，西北角乾位是您的命门。倪师曾言：西北不可见水火，若厨房或厕所在西北，主事业受阻，财库难守。建议正东震位保持通风透光，以木生火，辅助您的丙午元气。</p>
+                        <p><strong>天纪格局：</strong> 阿盛，您庚申金年、乙酉金月。金气极旺。丙午日元属火，火炼秋金。紫微七杀在命，乃英雄之格。武曲化权坐财帛，主实干进财。</p>
+                        <p><strong>地纪建议：</strong> 西北乾位决不可见火或厕。建议正东震位通透。丙午日燥，西南见水调和。</p>
                     </div>
                 </div>`;
+            container.innerHTML = content;
+        }
+
+        // --- 修复版指数退避 AI 调用逻辑 ---
+        async function fetchWithRetry(url, options) {
+            for (let i = 0; i < 5; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (response.ok) return await response.json();
+                    if (response.status !== 429 && response.status < 500) break;
+                } catch (e) {}
+                await new Promise(res => setTimeout(res, Math.pow(2, i) * 1000));
+            }
+            throw new Error("推演中断，请检查连接");
         }
 
         async function generate2000Words() {
             const loader = document.getElementById('global-loader');
             loader.classList.remove('hidden');
             const palaces = calculatePalaces();
-            const context = `命主:阿盛(Castor), 性别:男, 四柱:庚申年 乙酉月 丙午日 庚寅时。宫位数据:${JSON.stringify(palaces.map(p=>({n:p.n, s:p.stars.map(s=>s.name)})))}`;
+            // 修正属性名 p.n -> p.name
+            const contextData = palaces.map(p => ({
+                宫位: p.name,
+                地支: p.branch,
+                星曜: p.stars.map(s => s.name),
+                是身宫: p.isShenGong
+            }));
+            const context = `命主:阿盛(Castor), 1980年庚申生男, 四柱:庚申年 乙酉月 丙午日 庚寅时。宫位原始数据:${JSON.stringify(contextData)}`;
             
-            const system = `你扮演倪海厦老师。
-任务：生成一份不少于 2000 字的紫微斗数深度详批报告。
-要求：
-1. 语言：幽默、刚强、一针见血、强调天人合一。
-2. 结构：宏观大势(500字)、核心宫位四化推演(1000字)、天人地三才改命方案(500字)。
-3. 特别注意：命主是庚申年长男，丙午日生。
-4. 深度：必须达到“馆藏”级别，多引用易经挂理和中医五行。
-5. 禁止废话，字数必须充实到 2000 字。`;
+            const system = `你扮演国学大师倪海厦老师。
+任务：根据提供的命盘数据，生成一份不少于 2000 字的极深度紫微详批报告。
+报告纲要：
+1. 乾坤大势（约500字）：深度拆解庚申年、乙酉月、丙午日、庚寅时这四柱的生克关系，解释为何“火炼秋金”是此命造的灵魂。
+2. 命宫星辰深度演化（约1000字）：详述紫微七杀同宫的权力欲望、孤独感以及其在不同大运阶段的变现，结合财帛宫武曲化权的飞星路径做交叉论证。
+3. 倪氏改命秘法（约500字）：
+   - 地纪：根据其长男身份和燥火体质，提供一套完整的阳宅开运布局，具体到东南西北的陈设避忌。
+   - 人纪：从中医五行角度提供针对性的心脏与肺部调理方案，以及作为实干派的人事处世哲学。
+风格：言简意赅但内容极丰，语气刚烈、自信、幽默，多引用易经挂理。字数必须充实到 2000 字以上。`;
 
             try {
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
-                const payload = { contents: [{ parts: [{ text: `阿盛的命局求详解：${context}` }] }], systemInstruction: { parts: [{ text: system }] } };
+                const payload = {
+                    contents: [{ parts: [{ text: `倪师，请为阿盛做一份 2000 字以上的深度天机解盘：${context}` }] }],
+                    systemInstruction: { parts: [{ text: system }] }
+                };
                 
-                const response = await fetch(url, { method: 'POST', body: JSON.stringify(payload), headers: { 'Content-Type': 'application/json' } });
-                const result = await response.json();
-                const content = result.candidates[0].content.parts[0].text;
+                const result = await fetchWithRetry(url, { 
+                    method: 'POST', 
+                    body: JSON.stringify(payload), 
+                    headers: { 'Content-Type': 'application/json' } 
+                });
                 
+                const content = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (!content) throw new Error();
+
                 state.aiAnalysis = content;
                 document.getElementById('ai-text').textContent = content;
                 document.getElementById('ai-response-container').classList.remove('hidden');
                 switchTab('analysis');
             } catch (e) {
-                alert("天机推演中断，请重试");
+                alert("天机推演中断，请检查 API 配置或重试");
             } finally {
                 loader.classList.add('hidden');
             }
@@ -377,7 +398,7 @@
 
         function shareToWhatsApp() {
             if (!state.aiAnalysis) return alert("请先生成深度解盘内容");
-            const text = `【倪氏天纪详批 · 阿盛】\n\n核心断语预览：\n${state.aiAnalysis.substring(0, 500)}...\n\n(查看完整 PDF 深入报告请联系本人)`;
+            const text = `【倪氏天纪详批 · 阿盛】\n\n核心命局概览：\n${state.aiAnalysis.substring(0, 800)}...\n\n(查看 2000 字完整 PDF 报告请联系本人)`;
             const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
             window.open(url, '_blank');
         }
@@ -389,22 +410,23 @@
             const printContent = document.getElementById('print-content');
             printContent.innerHTML = `
                 <section class="space-y-10">
-                    <h3 class="text-4xl font-black text-red-950 border-b-4 border-red-100 pb-4">壹 · 先天格局与三才初断</h3>
+                    <h3 class="text-4xl font-black text-red-950 border-b-4 border-red-100 pb-4">壹 · 静态命局定格分析</h3>
                     ${document.getElementById('static-analysis').innerHTML}
                 </section>
                 <section class="space-y-10 pt-20 page-break">
-                    <h3 class="text-4xl font-black text-amber-900 border-b-4 border-amber-100 pb-4">贰 · 倪师 AI 2000字深度详批</h3>
-                    <div class="report-text whitespace-pre-wrap">${state.aiAnalysis || "（未生成 AI 解析，导出中仅包含基础数据）"}</div>
+                    <h3 class="text-4xl font-black text-amber-900 border-b-4 border-amber-100 pb-4">贰 · 倪师 AI 2000字深度解盘</h3>
+                    <div class="report-text whitespace-pre-wrap">${state.aiAnalysis || "（提示：请先在界面点击‘开启 2000字 天机推演’再导出，否则本部分为空白）"}</div>
                 </section>
             `;
-            
             window.print();
         }
 
         function switchTab(tab) {
             document.getElementById('view-chart').className = tab === 'chart' ? 'block overflow-x-auto pb-6 custom-scrollbar' : 'hidden';
             document.getElementById('view-analysis').className = tab === 'analysis' ? 'block space-y-12 pr-4 max-h-[800px] overflow-y-auto custom-scrollbar' : 'hidden';
-            document.querySelectorAll('.tab-btn').forEach(b => b.className = "tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-400");
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.className = "tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-400";
+            });
             document.getElementById(`tab-${tab}`).className = "tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105";
         }
 
