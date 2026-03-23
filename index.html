@@ -84,9 +84,9 @@
                     <i data-lucide="compass" class="w-10 h-10 md:w-12 md:h-12 transition-transform duration-1000 group-hover:rotate-180"></i>
                 </div>
                 <div>
-                    <h1 class="text-3xl md:text-5xl font-black tracking-tighter text-slate-900">倪氏天纪·分段详批系统</h1>
+                    <h1 class="text-3xl md:text-5xl font-black tracking-tighter text-slate-900">倪氏天纪·全动态详批系统</h1>
                     <div class="flex items-center gap-4 text-red-900 font-black text-[10px] md:text-xs mt-3 uppercase tracking-[0.4em] bg-red-50/50 w-fit px-4 py-1 rounded-full font-sans">
-                        <i data-lucide="zap" class="w-3 h-3"></i> 3500字十二宫 + 3000字流年
+                        <i data-lucide="zap" class="w-3 h-3"></i> 独立推演模块 · 拒绝中断
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                     </h2>
                     <div class="space-y-6">
                         <div class="flex p-1 bg-slate-100 rounded-xl mb-4">
-                            <button onclick="setCalendar('west')" id="cal-west" class="calendar-btn flex-1 py-2 text-[10px] font-black rounded-lg transition-all">公历 (Solar)</button>
+                            <button onclick="setCalendar('west')" id="cal-west" class="calendar-btn flex-1 py-2 text-[10px] font-black rounded-lg transition-all">西历 (Solar)</button>
                             <button onclick="setCalendar('lunar')" id="cal-lunar" class="calendar-btn flex-1 py-2 text-[10px] font-black rounded-lg transition-all active">农历 (Lunar)</button>
                         </div>
                         <div>
@@ -155,7 +155,7 @@
                             <button onclick="switchTab('chart')" id="tab-chart" class="tab-btn px-12 py-3.5 rounded-[1.5rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105">天机命阵图</button>
                             <button onclick="switchTab('analysis')" id="tab-analysis" class="tab-btn px-12 py-3.5 rounded-[1.5rem] text-sm font-black transition-all text-slate-400">详批报告内容</button>
                         </div>
-                        <button onclick="prepareAndPrint()" class="bg-red-950 text-white px-12 py-4 rounded-2xl text-sm font-black hover:bg-black shadow-2xl flex items-center gap-4 transition-all">
+                        <button onclick="prepareAndPrint()" class="bg-red-950 text-white px-12 py-4 rounded-2xl text-sm font-black hover:bg-black shadow-2xl flex items-center gap-4 transition-all active:scale-95">
                             <i data-lucide="printer" class="w-5 h-5"></i> 导出 6500字 馆藏报告
                         </button>
                     </div>
@@ -226,8 +226,8 @@
     <!-- 加载器 -->
     <div id="global-loader" class="hidden fixed inset-0 bg-slate-950/98 backdrop-blur-3xl z-[100] flex flex-col items-center justify-center px-10 text-center">
         <div class="loader ease-linear rounded-full border-[12px] border-t-[12px] border-slate-200 h-32 w-32 mb-12 shadow-[0_0_100px_rgba(255,255,255,0.1)]"></div>
-        <h2 id="loader-status" class="text-5xl font-black text-white tracking-[0.2em] mb-6">正在开启天机...</h2>
-        <p id="loader-progress" class="text-xl text-red-500 font-bold animate-pulse tracking-widest uppercase">Master Bo is connecting to Gemini Engine</p>
+        <h2 id="loader-status" class="text-5xl font-black text-white tracking-[0.2em] mb-6">正在推演天机...</h2>
+        <p id="loader-progress" class="text-xl text-red-500 font-bold animate-pulse tracking-widest uppercase">Master Bo is requesting deep analysis from Gemini</p>
     </div>
 
     <script>
@@ -307,8 +307,8 @@
                             <div class="grid grid-cols-4 gap-4 px-4 py-4 bg-white/40 rounded-3xl border border-red-900/5 mb-4 text-center">
                                 <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">生年</span><span class="text-sm font-black">${state.year}</span></div>
                                 <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">性别</span><span class="text-sm font-black">${state.gender}</span></div>
-                                <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">日元</span><span class="text-sm font-black text-red-900">丙午</span></div>
-                                <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">历法</span><span class="text-sm font-black">${state.calendarType === 'lunar' ? '农历' : '公历'}</span></div>
+                                <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">时辰</span><span class="text-sm font-black">${state.time}时</span></div>
+                                <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">历法</span><span class="text-sm font-black">${state.calendarType === 'lunar' ? '农历' : '西历'}</span></div>
                             </div>`;
                         grid.appendChild(c);
                     }
@@ -336,12 +336,19 @@
             for (let i = 0; i < 5; i++) {
                 try {
                     const response = await fetch(url, options);
-                    if (response.ok) return await response.json();
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.candidates && data.candidates[0].content) {
+                            return data;
+                        }
+                    }
                     if (response.status !== 429 && response.status < 500) break;
-                } catch (e) {}
+                } catch (e) {
+                    console.error("Retry Error:", e);
+                }
                 await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
             }
-            throw new Error("天机中断");
+            throw new Error("天机连接中断");
         }
 
         async function runAIEngine(type) {
@@ -355,16 +362,16 @@
             const baseContext = `命主:${state.name}, 生辰:${state.year}年${state.month}月${state.day}日, 历法:${state.calendarType}, 性别:${state.gender}, 命盘:${chartData}`;
 
             let prompt = "";
-            let system = "你扮演倪海厦老师。语气一针见血，强调地纪方位与人纪修身。字数必须其充实且极具深度。";
+            let system = "你扮演倪海厦老师。语气直白、刚硬、一针见血。严格从天纪、地纪、人纪三方面解析。拒绝废话，字数必须极其充实且具备实战指导意义。";
             
             if (type === '12palaces') {
                 status.textContent = "正在拆解十二宫位...";
-                progress.textContent = "针对 3500 字规模进行深度天机推演...";
-                prompt = `${baseContext}。请进行十二宫位全维度详批。每一宫位都要深入讨论，尤其是其带来的格局与改命建议。字数不少于 3500 字。`;
+                progress.textContent = "深度推演 3500 字规模的宫位神髓...";
+                prompt = `${baseContext}。请进行十二宫位全维度详批。每一宫位都要极其深入（不少于200字/宫），重点论述该宫位对命主这一生‘名位相等’的影响，以及具体的改命方位建议。总字数锁定在 3500 字以上。`;
             } else {
                 status.textContent = "正在锁定流年大势...";
-                progress.textContent = "针对 2026-2030 五年运势进行 3000 字详批...";
-                prompt = `${baseContext}。请推演 2026 丙午年至 2030 庚戌年这五年的流年大势。逐年分析财运、事业、地纪避忌。字数不少于 3000 字。`;
+                progress.textContent = "精准计算 2026-2030 五载乾坤大势 (3000字)...";
+                prompt = `${baseContext}。请针对 2026 丙午年至 2030 庚戌年这五年进行流年详批。逐年拆解流年大势、财官变数、地纪开运陈设、人纪情绪防范。总字数锁定在 3000 字以上。`;
             }
 
             try {
@@ -372,7 +379,7 @@
                 const payload = {
                     contents: [{ parts: [{ text: prompt }] }],
                     systemInstruction: { parts: [{ text: system }] },
-                    generationConfig: { maxOutputTokens: 8192, temperature: 0.8 },
+                    generationConfig: { maxOutputTokens: 8192, temperature: 0.7, topP: 0.9 },
                     safetySettings: [
                         { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
                         { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
@@ -400,7 +407,7 @@
                 document.getElementById('empty-analysis').classList.add('hidden');
                 switchTab('analysis');
             } catch (e) {
-                alert("推演中断，请检查 API 或重试。");
+                alert("推演中断：当前生成内容量巨大，由于网络限制导致超时。请再次点击按钮，系统将重新建立天机连接。");
             } finally {
                 loader.classList.add('hidden');
             }
@@ -412,7 +419,7 @@
             try {
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/${TTS_MODEL}:generateContent?key=${apiKey}`;
                 const payload = {
-                    contents: [{ parts: [{ text: `请用沉稳的长者声音朗读：${text.substring(0, 5000)}` }] }],
+                    contents: [{ parts: [{ text: `请用沉稳、充满智慧的长者声音诵读以下命理报告：${text.substring(0, 4500)}` }] }],
                     generationConfig: {
                         responseModalities: ["AUDIO"],
                         speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Charon" } } }
@@ -436,21 +443,29 @@
                 
                 const audio = new Audio(URL.createObjectURL(new Blob([view], { type: 'audio/wav' })));
                 audio.play();
-            } catch (e) { alert("语音播报暂时不可用"); }
+            } catch (e) { alert("语音功能暂时受限"); }
         }
 
         function prepareAndPrint() {
-            if (!state.ai12Palaces && !state.aiYearly) return alert("请先生成至少一项详批内容");
+            if (!state.ai12Palaces && !state.aiYearly) return alert("请先生成详批内容");
             document.getElementById('print-user-info').innerHTML = `<div>名讳：${state.name} | 性别：${state.gender}造</div><div>生辰：${state.year}年${state.month}月${state.day}日 (${state.calendarType === 'lunar' ? '农历' : '西历'})</div>`;
             document.getElementById('print-grid').innerHTML = document.getElementById('palace-grid').innerHTML;
             
             const printContent = document.getElementById('print-content');
             let fullHtml = "";
             if (state.ai12Palaces) {
-                fullHtml += `<div class="page-break"><h3 class="text-4xl font-black text-red-950 border-b-4 border-red-100 pb-4 mb-10">壹 · 十二宫位全维度详批</h3><div class="whitespace-pre-wrap">${state.ai12Palaces}</div></div>`;
+                const parts = state.ai12Palaces.split('【').filter(p => p.trim() !== "");
+                fullHtml += `<div class="page-break"><h3 class="text-4xl font-black text-red-950 border-b-4 border-red-100 pb-4 mb-10">壹 · 十二宫位全维度详批</h3></div>`;
+                parts.forEach(p => {
+                    fullHtml += `<div class="mb-12"><div class="text-2xl leading-[2.6] text-slate-800 whitespace-pre-wrap font-serif">【${p}</div></div>`;
+                });
             }
             if (state.aiYearly) {
-                fullHtml += `<div class="page-break"><h3 class="text-4xl font-black text-slate-900 border-b-4 border-slate-200 pb-4 mb-10">贰 · 2026-2030 五载流年推演</h3><div class="whitespace-pre-wrap">${state.aiYearly}</div></div>`;
+                const parts = state.aiYearly.split('【').filter(p => p.trim() !== "");
+                fullHtml += `<div class="page-break"><h3 class="text-4xl font-black text-slate-900 border-b-4 border-slate-200 pb-4 mb-10">贰 · 2026-2030 五载流年推演</h3></div>`;
+                parts.forEach(p => {
+                    fullHtml += `<div class="mb-12"><div class="text-2xl leading-[2.6] text-slate-800 whitespace-pre-wrap font-serif">【${p}</div></div>`;
+                });
             }
             printContent.innerHTML = fullHtml;
             window.print();
@@ -464,8 +479,8 @@
         }
 
         function shareToWhatsApp() {
-            const summary = (state.ai12Palaces + state.aiYearly).substring(0, 800);
-            const text = `【倪氏详批报告 · ${state.name}】\n动态推演预览：\n${summary}...\n\n(查看 6500 字完整详批报告请联系本人)`;
+            const summary = (state.ai12Palaces + state.aiYearly).substring(0, 600);
+            const text = `【倪氏详批报告预览 · ${state.name}】\n动态推演核心要旨：\n${summary}...\n\n(查看 6500 字完整报告请联系本人)`;
             window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         }
 
@@ -473,6 +488,7 @@
             document.getElementById(`input-${id}`).addEventListener('change', (e) => {
                 state[id] = e.target.value;
                 renderChart();
+                // 仅重置当前未生成的板块提示，不强行清空已生成内容，除非用户重新点击按钮
             });
         });
 
