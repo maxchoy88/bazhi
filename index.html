@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>倪氏天纪紫微 2000字详批系统</title>
+    <title>倪氏天纪紫微 2000字详批分享版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
@@ -23,13 +23,13 @@
             border-radius: 20px;
         }
         
-        /* 打印分页控制 */
+        /* 打印分页与 PDF 优化 */
         @media print {
             .no-print { display: none !important; }
             body { background: white !important; margin: 0; padding: 0; }
             .print-only { display: block !important; }
             .print-container { 
-                padding: 50px !important; 
+                padding: 60px !important; 
                 background: white !important; 
                 min-height: 100vh;
                 display: block !important;
@@ -37,9 +37,11 @@
             .page-break { page-break-after: always; }
             .report-text { 
                 font-size: 14pt !important; 
-                line-height: 2 !important;
+                line-height: 2.2 !important;
                 text-align: justify;
+                color: #1a1a1a;
             }
+            h1, h2, h3 { color: #7f1d1d !important; }
         }
         
         .print-only { display: none; }
@@ -50,7 +52,7 @@
         }
         .loader {
             border-top-color: #7f1d1d;
-            animation: spinner 0.8s linear infinite;
+            animation: spinner 0.6s linear infinite;
         }
         @keyframes spinner {
             to { transform: rotate(360deg); }
@@ -59,54 +61,55 @@
 </head>
 <body class="p-2 md:p-6 text-slate-900">
 
-    <!-- 网页 UI -->
+    <!-- 网页 UI 区域 -->
     <div class="max-w-7xl mx-auto space-y-4 no-print">
         <header class="bg-white border-b-[12px] border-red-950 rounded-3xl p-8 shadow-2xl flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden">
             <div class="absolute top-0 left-0 w-48 h-48 bg-red-900/5 rounded-full blur-[80px]"></div>
             <div class="flex items-center gap-8 z-10">
-                <div class="bg-red-950 p-6 rounded-3xl text-white shadow-2xl ring-4 ring-red-50 relative group">
+                <div class="bg-red-950 p-6 rounded-3xl text-white shadow-2xl ring-4 ring-red-50 relative">
                     <i data-lucide="compass" class="w-10 h-10"></i>
                     <div class="absolute -top-2 -right-2 bg-amber-500 w-6 h-6 rounded-full flex items-center justify-center border-2 border-white shadow-lg animate-bounce">
-                        <i data-lucide="sparkles" class="w-3 h-3 text-white"></i>
+                        <i data-lucide="zap" class="w-3 h-3 text-white"></i>
                     </div>
                 </div>
                 <div>
-                    <h1 class="text-4xl md:text-5xl font-black tracking-tighter text-slate-900">倪氏天纪·2000字详批报告</h1>
+                    <h1 class="text-4xl md:text-5xl font-black tracking-tighter text-slate-900">倪氏天纪·2000字详批系统</h1>
                     <div class="flex items-center gap-4 text-red-900 font-black text-xs mt-3 uppercase tracking-[0.4em] bg-red-50/50 w-fit px-3 py-1 rounded-full">
-                        <i data-lucide="award" class="w-3 h-3"></i> 馆藏级别 · 四柱八字集成分析
+                        <i data-lucide="share-2" class="w-3 h-3"></i> 支持 WhatsApp 一键分享
                     </div>
                 </div>
             </div>
 
             <div class="flex flex-col items-center gap-3 z-10">
                 <button id="ai-btn" class="bg-red-800 text-white px-8 py-3 rounded-2xl text-sm font-black hover:bg-black transition-all shadow-xl flex items-center gap-3">
-                    <i data-lucide="zap" class="w-4 h-4"></i>
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
                     生成 2000字 深度解盘 ✨
                 </button>
             </div>
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Sidebar -->
             <div class="lg:col-span-3 space-y-4">
                 <section class="bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-200">
                     <h2 class="text-xs font-black mb-8 flex items-center gap-2 text-slate-500 uppercase tracking-widest border-b border-slate-50 pb-4">
-                        <i data-lucide="calendar" class="w-4 h-4 text-red-900"></i> 命主资料
+                        <i data-lucide="user" class="w-4 h-4 text-red-900"></i> 命主资料
                     </h2>
                     <div class="space-y-6">
                         <div>
-                            <label class="text-[11px] font-black text-slate-400 block mb-2 px-1">名讳</label>
-                            <input type="text" id="input-name" value="阿盛" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-5 py-4 text-sm focus:border-red-900 outline-none transition-all shadow-sm" />
+                            <label class="text-[11px] font-black text-slate-400 block mb-2">名讳</label>
+                            <input type="text" id="input-name" value="阿盛" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-5 py-4 text-sm focus:border-red-900 outline-none shadow-sm" />
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="text-[11px] font-black text-slate-400 block mb-2 px-1">性别</label>
+                                <label class="text-[11px] font-black text-slate-400 block mb-2">性别</label>
                                 <select id="input-gender" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-4 py-4 text-sm font-bold">
                                     <option value="男">男</option>
                                     <option value="女">女</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="text-[11px] font-black text-slate-400 block mb-2 px-1">时辰</label>
+                                <label class="text-[11px] font-black text-slate-400 block mb-2">时辰</label>
                                 <select id="input-time" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-4 py-4 text-sm font-bold">
                                     <option value="寅">寅时</option>
                                     <option value="子">子时</option>
@@ -116,48 +119,61 @@
                             </div>
                         </div>
                         <div>
-                            <label class="text-[11px] font-black text-slate-400 block mb-2 px-1">农历生日</label>
-                            <div class="grid grid-cols-3 gap-3">
-                                <input type="number" id="input-year" value="1980" class="bg-slate-50 border-2 border-slate-100 rounded-2xl py-3 text-sm text-center font-bold" />
-                                <input type="number" id="input-month" value="9" class="bg-slate-50 border-2 border-slate-100 rounded-2xl py-3 text-sm text-center font-bold" />
-                                <input type="number" id="input-day" value="30" class="bg-slate-50 border-2 border-red-200 rounded-2xl py-3 text-sm text-center font-black text-red-900" />
+                            <label class="text-[11px] font-black text-slate-400 block mb-2">农历生辰</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <input type="number" id="input-year" value="1980" class="bg-slate-50 border-2 border-slate-100 rounded-2xl py-3 text-xs text-center font-bold" />
+                                <input type="number" id="input-month" value="9" class="bg-slate-50 border-2 border-slate-100 rounded-2xl py-3 text-xs text-center font-bold" />
+                                <input type="number" id="input-day" value="30" class="bg-slate-50 border-2 border-red-200 rounded-2xl py-3 text-xs text-center font-black text-red-900" />
                             </div>
                         </div>
                     </div>
                 </section>
                 <section class="bg-red-950 rounded-[2.5rem] p-10 text-red-50 shadow-2xl relative overflow-hidden">
-                    <h2 class="text-xs font-black mb-6 flex items-center gap-2 text-red-400">倪师秘录</h2>
-                    <p class="text-sm leading-relaxed italic opacity-80 font-serif">“理在命先，位正命顺。2000字之详批，旨在究天人之际，通古今之变。”</p>
+                    <i data-lucide="quote" class="absolute -right-4 -bottom-4 w-24 h-24 text-white/5"></i>
+                    <h2 class="text-xs font-black mb-6 text-red-400 uppercase tracking-widest">倪师语录</h2>
+                    <p class="text-sm leading-relaxed italic opacity-80 font-serif">“我命由我不由天，但你得先懂得你的天命。”</p>
                 </section>
             </div>
 
+            <!-- Main Content -->
             <div class="lg:col-span-9 space-y-4">
                 <div class="bg-white rounded-[3rem] p-6 md:p-12 shadow-2xl border border-slate-200 min-h-[800px]">
                     <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
-                        <div class="flex p-2 bg-slate-100 rounded-[2.5rem]">
+                        <div class="flex p-2 bg-slate-100 rounded-[2.5rem] shadow-inner">
                             <button onclick="switchTab('chart')" id="tab-chart" class="tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105">命造布阵</button>
-                            <button onclick="switchTab('analysis')" id="tab-analysis" class="tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-400">深度解析</button>
+                            <button onclick="switchTab('analysis')" id="tab-analysis" class="tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-400">深度报告</button>
                         </div>
-                        <button onclick="prepareAndPrint()" class="bg-red-950 text-white px-12 py-4 rounded-2xl text-sm font-black hover:bg-black shadow-2xl flex items-center gap-4 transition-all">
-                            <i data-lucide="printer" class="w-5 h-5"></i> 导出 2000字 深入报告
-                        </button>
+                        <div class="flex gap-4">
+                            <button onclick="prepareAndPrint()" class="bg-slate-900 text-white px-8 py-4 rounded-2xl text-sm font-black hover:bg-black shadow-xl flex items-center gap-4 transition-all">
+                                <i data-lucide="file-text" class="w-5 h-5 text-red-500"></i> 导出 PDF
+                            </button>
+                        </div>
                     </div>
 
+                    <!-- Chart View -->
                     <div id="view-chart" class="block overflow-x-auto pb-6 custom-scrollbar">
                         <div id="palace-grid" class="min-w-[800px] grid grid-cols-4 grid-rows-4 gap-4 p-2 bg-slate-50/50 rounded-[3rem]"></div>
                     </div>
 
+                    <!-- Analysis View -->
                     <div id="view-analysis" class="hidden space-y-12 pr-4 max-h-[800px] overflow-y-auto custom-scrollbar font-serif">
-                        <div id="ai-response-container" class="hidden bg-amber-50 p-10 rounded-[3rem] border-2 border-amber-200 shadow-xl relative">
-                            <div class="flex justify-between items-center mb-8">
-                                <h4 class="text-3xl font-black text-amber-900 flex items-center gap-3">
-                                    <i data-lucide="feather" class="w-8 h-8"></i> 倪师 AI 2000字长文批命 ✨
-                                </h4>
-                                <button id="tts-btn" class="bg-amber-600 text-white p-4 rounded-full hover:bg-amber-700 shadow-lg transition-transform hover:scale-110">
-                                    <i data-lucide="volume-2" class="w-6 h-6"></i>
-                                </button>
+                        <div id="ai-response-container" class="hidden space-y-6">
+                            <div class="bg-amber-50 p-10 rounded-[3rem] border-2 border-amber-200 shadow-xl relative">
+                                <div class="flex justify-between items-center mb-8">
+                                    <h4 class="text-3xl font-black text-amber-900 flex items-center gap-3">
+                                        <i data-lucide="pen-tool" class="w-8 h-8 text-amber-600"></i> 倪师 AI 2000字详批 ✨
+                                    </h4>
+                                    <div class="flex gap-3">
+                                        <button id="whatsapp-btn" class="bg-green-600 text-white px-6 py-3 rounded-2xl text-sm font-black flex items-center gap-2 hover:bg-green-700 shadow-lg">
+                                            <i data-lucide="message-circle" class="w-5 h-5"></i> 分享 WhatsApp
+                                        </button>
+                                        <button id="tts-btn" class="bg-amber-600 text-white p-4 rounded-full hover:bg-amber-700 shadow-lg transition-transform hover:scale-110">
+                                            <i data-lucide="volume-2" class="w-6 h-6"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <p id="ai-text" class="text-xl text-amber-950 leading-[2.8] whitespace-pre-wrap pl-8 border-l-4 border-amber-200"></p>
                             </div>
-                            <p id="ai-text" class="text-xl text-amber-950 leading-[2.8] whitespace-pre-wrap pl-8 border-l-4 border-amber-200"></p>
                         </div>
                         <div id="static-analysis" class="grid grid-cols-1 gap-12 text-lg"></div>
                     </div>
@@ -166,47 +182,56 @@
         </div>
     </div>
 
-    <!-- 打印专区 -->
+    <!-- 打印预览区 (导出PDF的核心内容) -->
     <div id="print-report" class="print-only print-container font-serif">
         <div class="max-w-4xl mx-auto">
             <!-- 封面 -->
             <div class="text-center border-b-[20px] border-double border-red-900 pb-20 mb-20 page-break">
                 <div class="flex justify-center mb-10">
-                    <div class="w-32 h-32 border-8 border-red-900 rounded-[2rem] flex items-center justify-center rotate-45 shadow-2xl">
+                    <div class="w-32 h-32 border-8 border-red-900 rounded-[2rem] flex items-center justify-center rotate-45 shadow-2xl bg-white">
                        <i data-lucide="compass" class="w-20 h-20 text-red-950 -rotate-45"></i>
                     </div>
                 </div>
-                <h1 class="text-8xl font-black text-slate-900 mb-8 tracking-tighter">倪氏三才深入分析</h1>
-                <h2 class="text-3xl font-bold text-red-900 mb-12 tracking-[1em] uppercase">2000字馆藏批本</h2>
-                <div id="print-user-info" class="mt-20 grid grid-cols-2 gap-12 text-2xl font-black text-slate-600 border-y-4 border-slate-100 py-10 px-8"></div>
+                <h1 class="text-8xl font-black text-slate-900 mb-8 tracking-tighter">倪氏三才深入详批</h1>
+                <h2 class="text-3xl font-bold text-red-900 mb-12 tracking-[0.8em] uppercase">2000字馆藏级别报告</h2>
+                <div id="print-user-info" class="mt-20 grid grid-cols-2 gap-12 text-2xl font-black text-slate-600 border-y-4 border-slate-100 py-12 px-8"></div>
             </div>
 
             <!-- 命盘页 -->
             <div class="page-break space-y-12 py-20">
                 <h2 class="text-4xl font-black border-l-[16px] border-red-950 pl-10 mb-16">乾坤命造大图</h2>
-                <div id="print-grid" class="grid grid-cols-4 grid-rows-4 gap-3 border-4 border-slate-300 p-4 rounded-[3rem] bg-slate-50 shadow-inner"></div>
-                <p class="text-center text-slate-400 mt-10 font-bold tracking-widest italic">※ 备注：此图根据倪氏天纪法门排布 ※</p>
-            </div>
-
-            <!-- 内容页 -->
-            <div class="space-y-20 py-20">
-                <div id="print-content" class="report-text space-y-16">
-                    <!-- JS fills this -->
+                <div id="print-grid" class="grid grid-cols-4 grid-rows-4 gap-3 border-4 border-slate-300 p-6 rounded-[3rem] bg-[#fdfaf2] shadow-inner"></div>
+                <div class="text-center text-slate-400 mt-10 font-bold tracking-widest italic space-y-2">
+                    <p>※ 备注：此图根据倪氏天纪法门排布 ※</p>
+                    <p>生辰基准：庚申年 乙酉月 丙午日 庚寅时</p>
                 </div>
             </div>
 
-            <div class="mt-40 pt-20 border-t-8 border-double border-slate-100 text-center text-slate-300">
-                <p class="text-4xl italic mb-16 text-slate-400">“理正则命顺，心医胜中医。”</p>
-                <p class="text-sm font-black tracking-[2em]">— 公元二零二六 庚申 乙酉 丙午 谨志 —</p>
+            <!-- 正文长白页 -->
+            <div class="space-y-20 py-20">
+                <div id="print-content" class="report-text space-y-16">
+                    <!-- JS 动态填充内容 -->
+                </div>
+            </div>
+
+            <!-- 封底 -->
+            <div class="mt-40 pt-24 border-t-8 border-double border-slate-100 text-center text-slate-300">
+                <p class="text-4xl italic mb-16 text-slate-400">“理正则命顺，心医胜中医，位正万事兴。”</p>
+                <div class="flex justify-center gap-12 opacity-10 grayscale mb-16">
+                    <i data-lucide="shield" class="w-12 h-12"></i>
+                    <i data-lucide="compass" class="w-24 h-24"></i>
+                    <i data-lucide="award" class="w-12 h-12"></i>
+                </div>
+                <p class="text-sm font-black tracking-[2em] uppercase">— 谨志于 公元二零二六 庚申年 —</p>
             </div>
         </div>
     </div>
 
-    <!-- 加载遮罩 -->
-    <div id="global-loader" class="hidden fixed inset-0 bg-slate-900/90 backdrop-blur-2xl z-[100] flex flex-col items-center justify-center">
-        <div class="loader ease-linear rounded-full border-8 border-t-8 border-slate-200 h-24 w-24 mb-8"></div>
-        <h2 class="text-3xl font-black text-white tracking-widest">正在推演 2000 字天地人详批...</h2>
-        <p class="text-slate-400 mt-4 animate-pulse">命理深邃，请耐心等待倪师出关</p>
+    <!-- 加载器 -->
+    <div id="global-loader" class="hidden fixed inset-0 bg-slate-900/95 backdrop-blur-2xl z-[100] flex flex-col items-center justify-center text-center px-6">
+        <div class="loader ease-linear rounded-full border-8 border-t-8 border-slate-200 h-28 w-28 mb-10 shadow-[0_0_50px_rgba(255,255,255,0.1)]"></div>
+        <h2 class="text-4xl font-black text-white tracking-widest mb-4">正在推演 2000 字天地人详批...</h2>
+        <p class="text-xl text-red-400 font-bold animate-pulse">倪师正在观星布阵，请耐心等待天机显现</p>
     </div>
 
     <script>
@@ -225,17 +250,16 @@
             month: 9,
             day: 30,
             time: "寅",
-            aiAnalysis: "",
-            isLoading: false
+            aiAnalysis: ""
         };
 
         const getElementColor = (item) => {
             const wood = ["甲", "乙", "寅", "卯"];
             const fire = ["丙", "丁", "巳", "午"];
-            const metal = ["庚", "辛", "申", "酉"];
+            const earth = ["戊", "己", "辰", "戌", "丑", "未"];
             if (wood.includes(item)) return "text-emerald-700";
             if (fire.includes(item)) return "text-red-600";
-            if (metal.includes(item)) return "text-yellow-600";
+            if (earth.includes(item)) return "text-amber-700";
             return "text-slate-500";
         };
 
@@ -296,9 +320,9 @@
                     <span class="text-[12px] font-black ${getElementColor(p.stem)}">${p.stem}${p.branch}</span>
                 </div>
                 <div class="flex flex-grow items-center justify-center gap-2">
-                    ${p.stars.map(s => `<span class="text-lg font-black text-red-900 writing-vertical-lr">${s.name}</span>`).join('')}
+                    ${p.stars.map(s => `<span class="text-lg font-black text-red-900 writing-vertical-lr tracking-tighter">${s.name}</span>`).join('')}
                 </div>
-                <span class="text-[9px] text-slate-400 font-mono">${p.daYun} 岁</span>`;
+                <span class="text-[9px] text-slate-400 font-mono tracking-tighter">${p.daYun} 岁</span>`;
                 grid.appendChild(card);
             });
             lucide.createIcons();
@@ -309,10 +333,10 @@
             const container = document.getElementById('static-analysis');
             container.innerHTML = `
                 <div class="bg-[#fffdf9] p-12 rounded-[4rem] border-2 border-slate-100 shadow-2xl">
-                    <h4 class="text-3xl font-black text-red-950 mb-10 border-b-4 border-red-50 pb-6">倪师三才要略</h4>
-                    <div class="space-y-10 text-xl leading-[2.4] text-slate-800">
-                        <p><strong>天纪：</strong> 阿盛，您庚申金年、乙酉金月、丙午火日。金气过盛，需火炼之。紫微七杀在命，乃化气为权之格，主贵而不主富。武曲化权在财，主实干得财。此命局贵在开创，不宜守成。</p>
-                        <p><strong>地纪：</strong> 西北乾位乃您的命门。作为1980年生长男，西北绝不可见火或厕。正东震位需通透。丙午日火性燥，西南见水为妙。</p>
+                    <h4 class="text-3xl font-black text-red-950 mb-10 border-b-4 border-red-50 pb-6">倪师三才要略 (静态分析)</h4>
+                    <div class="space-y-10 text-xl leading-[2.6] text-slate-800 font-serif">
+                        <p><strong>天纪格局：</strong> 阿盛，您生于庚申金年、乙酉金月。此为金气极旺之局。丙午日元属火，火炼秋金，主人生需历经艰辛方能显贵。紫微七杀在命，属于“极向离明”之变格，武曲化权坐财帛，说明您对金钱掌控欲极强，具备开创性财富的能力。</p>
+                        <p><strong>地纪建议：</strong> 1980年生长男，西北角乾位是您的命门。倪师曾言：西北不可见水火，若厨房或厕所在西北，主事业受阻，财库难守。建议正东震位保持通风透光，以木生火，辅助您的丙午元气。</p>
                     </div>
                 </div>`;
         }
@@ -321,20 +345,20 @@
             const loader = document.getElementById('global-loader');
             loader.classList.remove('hidden');
             const palaces = calculatePalaces();
-            const context = `命主:阿盛, 性别:男, 四柱:庚申年 乙酉月 丙午日 庚寅时。宫位数据:${JSON.stringify(palaces.map(p=>({n:p.name, s:p.stars.map(s=>s.name)})))}`;
+            const context = `命主:阿盛(Castor), 性别:男, 四柱:庚申年 乙酉月 丙午日 庚寅时。宫位数据:${JSON.stringify(palaces.map(p=>({n:p.n, s:p.stars.map(s=>s.name)})))}`;
             
-            const system = `你是一位精通倪海厦老师《天纪》体系的紫微斗数宗师。
-你的任务是为命主写一份字数不少于 2000 字的极深度分析报告。
-报告结构要求：
-1. 宏观格局（500字）：从四柱纳音、五行局深度剖析其人生基调。
-2. 十二宫深度拆解（1000字）：挑选命、财、官、迁、疾、友等核心宫位进行星曜与四化路径的精密推导。
-3. 倪氏三才专断（500字）：提供具体的阳宅方位调整方案（地纪）和基于五行的中医养生策略（人纪）。
-风格：语气要像倪师本人，刚毅、幽默、一针见血。使用“我告诉你”、“听好了”等口语化但专业的倪氏语言。
-请确保内容充实、专业，严禁废话，字数必须达到 2000 字规模。`;
+            const system = `你扮演倪海厦老师。
+任务：生成一份不少于 2000 字的紫微斗数深度详批报告。
+要求：
+1. 语言：幽默、刚强、一针见血、强调天人合一。
+2. 结构：宏观大势(500字)、核心宫位四化推演(1000字)、天人地三才改命方案(500字)。
+3. 特别注意：命主是庚申年长男，丙午日生。
+4. 深度：必须达到“馆藏”级别，多引用易经挂理和中医五行。
+5. 禁止废话，字数必须充实到 2000 字。`;
 
             try {
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
-                const payload = { contents: [{ parts: [{ text: `请对以下命局进行 2000 字深解：${context}` }] }], systemInstruction: { parts: [{ text: system }] } };
+                const payload = { contents: [{ parts: [{ text: `阿盛的命局求详解：${context}` }] }], systemInstruction: { parts: [{ text: system }] } };
                 
                 const response = await fetch(url, { method: 'POST', body: JSON.stringify(payload), headers: { 'Content-Type': 'application/json' } });
                 const result = await response.json();
@@ -345,28 +369,32 @@
                 document.getElementById('ai-response-container').classList.remove('hidden');
                 switchTab('analysis');
             } catch (e) {
-                alert("推演失败，请检查网络");
+                alert("天机推演中断，请重试");
             } finally {
                 loader.classList.add('hidden');
             }
         }
 
+        function shareToWhatsApp() {
+            if (!state.aiAnalysis) return alert("请先生成深度解盘内容");
+            const text = `【倪氏天纪详批 · 阿盛】\n\n核心断语预览：\n${state.aiAnalysis.substring(0, 500)}...\n\n(查看完整 PDF 深入报告请联系本人)`;
+            const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank');
+        }
+
         function prepareAndPrint() {
-            const printInfo = document.getElementById('print-user-info');
-            printInfo.innerHTML = `<div>名讳：${state.name} | 性别：${state.gender}</div>
-                                   <div>四柱：庚申 乙酉 丙午 庚寅</div>`;
-            
+            document.getElementById('print-user-info').innerHTML = `<div>名讳：${state.name} | 性别：${state.gender}</div><div>生辰：庚申年 乙酉月 丙午日 庚寅时</div>`;
             document.getElementById('print-grid').innerHTML = document.getElementById('palace-grid').innerHTML;
             
             const printContent = document.getElementById('print-content');
             printContent.innerHTML = `
                 <section class="space-y-10">
-                    <h3 class="text-4xl font-black text-red-950 border-b-4 border-red-100 pb-4">第一部分：三才初断</h3>
+                    <h3 class="text-4xl font-black text-red-950 border-b-4 border-red-100 pb-4">壹 · 先天格局与三才初断</h3>
                     ${document.getElementById('static-analysis').innerHTML}
                 </section>
-                <section class="space-y-10 pt-20">
-                    <h3 class="text-4xl font-black text-amber-900 border-b-4 border-amber-100 pb-4">第二部分：倪师 AI 2000字深度报告</h3>
-                    <div class="report-text whitespace-pre-wrap">${state.aiAnalysis || "（尚未生成 AI 报告，请先点击‘生成2000字深度解盘’）"}</div>
+                <section class="space-y-10 pt-20 page-break">
+                    <h3 class="text-4xl font-black text-amber-900 border-b-4 border-amber-100 pb-4">贰 · 倪师 AI 2000字深度详批</h3>
+                    <div class="report-text whitespace-pre-wrap">${state.aiAnalysis || "（未生成 AI 解析，导出中仅包含基础数据）"}</div>
                 </section>
             `;
             
@@ -376,15 +404,13 @@
         function switchTab(tab) {
             document.getElementById('view-chart').className = tab === 'chart' ? 'block overflow-x-auto pb-6 custom-scrollbar' : 'hidden';
             document.getElementById('view-analysis').className = tab === 'analysis' ? 'block space-y-12 pr-4 max-h-[800px] overflow-y-auto custom-scrollbar' : 'hidden';
-            const btns = document.querySelectorAll('.tab-btn');
-            btns.forEach(b => b.className = "tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-400");
-            const active = document.getElementById(`tab-${tab}`);
-            active.className = "tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105";
+            document.querySelectorAll('.tab-btn').forEach(b => b.className = "tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-400");
+            document.getElementById(`tab-${tab}`).className = "tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105";
         }
 
         document.getElementById('ai-btn').addEventListener('click', generate2000Words);
+        document.getElementById('whatsapp-btn').addEventListener('click', shareToWhatsApp);
         
-        // Input Sync
         ['name', 'gender', 'year', 'month', 'day', 'time'].forEach(k => {
             document.getElementById(`input-${k}`).addEventListener('change', e => {
                 state[k] = e.target.value;
