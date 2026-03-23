@@ -22,11 +22,18 @@
             background: #cbd5e1;
             border-radius: 20px;
         }
+        
+        /* 打印专用样式 */
         @media print {
             .no-print { display: none !important; }
-            body { background: white !important; }
-            .print-area { padding: 0 !important; }
+            body { background: white !important; margin: 0; padding: 0; }
+            .print-only { display: block !important; }
+            .print-container { padding: 40px !important; background: white !important; min-height: 100vh; }
+            .page-break { page-break-after: always; }
         }
+        
+        .print-only { display: none; }
+        
         .palace-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -42,6 +49,7 @@
 </head>
 <body class="p-2 md:p-6 text-slate-900">
 
+    <!-- 网页显示区域 -->
     <div class="max-w-7xl mx-auto space-y-4 no-print">
         <!-- Header -->
         <header class="bg-white border-b-[12px] border-red-950 rounded-3xl p-8 shadow-2xl flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden">
@@ -140,8 +148,8 @@
                             <button onclick="switchTab('chart')" id="tab-chart" class="tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105">乾坤布阵</button>
                             <button onclick="switchTab('analysis')" id="tab-analysis" class="tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-400">三才详批</button>
                         </div>
-                        <button onclick="window.print()" class="bg-red-950 text-white px-12 py-4 rounded-2xl text-sm font-black hover:bg-black transition-all shadow-2xl flex items-center gap-4">
-                            <i data-lucide="printer" class="w-5 h-5"></i> 导出馆藏级报告
+                        <button onclick="prepareAndPrint()" class="bg-red-950 text-white px-12 py-4 rounded-2xl text-sm font-black hover:bg-black transition-all shadow-2xl flex items-center gap-4">
+                            <i data-lucide="printer" class="w-5 h-5"></i> 导出馆藏级深入报告
                         </button>
                     </div>
 
@@ -171,6 +179,56 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 打印专用区域 (平时隐藏) -->
+    <div id="print-report" class="print-only print-container font-serif">
+        <div class="max-w-4xl mx-auto space-y-12">
+            <!-- 封面页/标题 -->
+            <div class="text-center border-b-[16px] border-double border-red-950 pb-16">
+                <div class="mb-10 flex justify-center">
+                    <div class="w-24 h-24 border-4 border-red-900 rounded-2xl flex items-center justify-center p-4 rotate-45">
+                       <i data-lucide="compass" class="w-16 h-16 text-red-950 -rotate-45"></i>
+                    </div>
+                </div>
+                <h1 class="text-6xl font-black text-slate-900 mb-6">倪氏三才深入详批报告</h1>
+                <p class="text-xl tracking-[0.5em] text-red-900 uppercase opacity-60">Heaven & Earth Analytics Master Edition</p>
+                <div id="print-user-info" class="mt-16 text-xl border-y-2 border-slate-100 py-6 grid grid-cols-2 gap-8 font-black text-slate-500">
+                    <!-- JS fills this -->
+                </div>
+            </div>
+
+            <!-- 命盘大图打印版 -->
+            <div class="space-y-6 page-break">
+                <h2 class="text-3xl font-black border-l-8 border-red-900 pl-6 mb-10">乾坤命造布阵图</h2>
+                <div id="print-grid" class="grid grid-cols-4 grid-rows-4 gap-2 border-2 border-slate-200 p-2 rounded-2xl scale-[0.85] origin-top">
+                    <!-- JS clones current grid here -->
+                </div>
+            </div>
+
+            <!-- 详细解析打印版 -->
+            <div class="space-y-16">
+                <section>
+                    <h2 class="text-3xl font-black border-l-8 border-red-900 pl-6 mb-8">天纪与地纪详断</h2>
+                    <div id="print-static-analysis" class="space-y-10 text-xl leading-[2.2] text-slate-800">
+                        <!-- JS fills this -->
+                    </div>
+                </section>
+
+                <section id="print-ai-section" class="hidden">
+                    <h2 class="text-3xl font-black border-l-8 border-amber-600 pl-6 mb-8 text-amber-900">倪师 AI 深度解盘</h2>
+                    <div id="print-ai-text" class="text-xl leading-[2.4] text-amber-900 bg-amber-50 p-10 rounded-3xl border-2 border-amber-100 whitespace-pre-wrap">
+                        <!-- JS fills this -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- 结语 -->
+            <div class="mt-40 pt-20 border-t-4 border-double border-slate-100 text-center text-slate-300">
+                <p class="text-3xl italic mb-12 text-slate-400">“心医胜过中医，位正方能命顺。”</p>
+                <p class="text-sm font-black tracking-[1.5em]">— 谨以本报告致敬一代宗师倪海厦 —</p>
             </div>
         </div>
     </div>
@@ -288,11 +346,6 @@
             const grid = document.getElementById('palace-grid');
             grid.innerHTML = '';
 
-            // Mapping to 4x4 Grid with center hole
-            // Order: [5, 6, 7, 8] - Top row
-            // [4, center, center, 9] - Mid-Upper
-            // [3, center, center, 10] - Mid-Lower
-            // [2, 1, 0, 11] - Bottom row
             const order = [5, 6, 7, 8, 4, 'center', 9, 3, 'center', 10, 2, 1, 0, 11];
             
             order.forEach(idx => {
@@ -366,16 +419,52 @@
 
         function updateStaticAnalysis() {
             const container = document.getElementById('static-analysis');
-            container.innerHTML = `
+            const analysisHtml = `
                 <div class="bg-[#fffdf9] p-10 rounded-[3rem] border border-slate-100 shadow-xl">
-                    <h4 class="text-2xl font-black text-red-950 mb-8 border-b-2 border-red-50 pb-5">天纪解析</h4>
-                    <p class="text-slate-700 leading-[2.4]">阿盛，观您庚申年四柱。庚金带杀，丙火炼之。命宫见紫微七杀，化气为权，乃英雄之路。武曲化权入财帛，对金钱掌控欲强，一生财源稳健，宜从专业领域深耕。</p>
+                    <h4 class="text-2xl font-black text-red-950 mb-8 border-b-2 border-red-50 pb-5">天纪解析 · 先天之命</h4>
+                    <p class="text-slate-700 leading-[2.4] font-serif">
+                        阿盛，观您庚申年四柱：庚金带杀，丙火炼之。命宫见紫微七杀，此格谓之“杀破狼”与紫微化权之变局。
+                        在倪师体系中，这种格局乃英雄开路之象。武曲化权入财帛，代表您对金钱掌控欲极强，具备从零开始积累财富的实干精神。
+                    </p>
                 </div>
                 <div class="bg-[#fffdf9] p-10 rounded-[3rem] border border-slate-100 shadow-xl">
-                    <h4 class="text-2xl font-black text-green-950 mb-8 border-b-2 border-green-50 pb-5">地纪建议</h4>
-                    <p class="text-slate-700 leading-[2.4]">身为长男，西北角乾位不可见火。厨房若在西北，谓之火烧天门，损事业名望。建议正东方保持通风透光，寅木受克，需用绿色植物化解金火之气。</p>
+                    <h4 class="text-2xl font-black text-green-950 mb-8 border-b-2 border-green-50 pb-5">地纪建议 · 阳宅之位</h4>
+                    <p class="text-slate-700 leading-[2.4] font-serif">
+                        长男（庚申年生人）必占震位（东）与乾位（西北）。
+                        倪师告诫：西北角决不可见火或厕所。若厨房在西北，主男主人易患头疾且财库虚耗。
+                        针对您的丙午日燥火，建议家宅西南位保持开阔，利于纳凉水之气以中和命局。
+                    </p>
                 </div>
             `;
+            container.innerHTML = analysisHtml;
+            // 同步到打印区域
+            document.getElementById('print-static-analysis').innerHTML = analysisHtml;
+        }
+
+        // --- Print Function ---
+        function prepareAndPrint() {
+            // 更新个人资料
+            const info = document.getElementById('print-user-info');
+            info.innerHTML = `
+                <div class="flex justify-between"><span>姓名：${state.name}</span><span>性别：${state.gender}</span></div>
+                <div class="flex justify-between"><span>四柱：庚申 乙酉 丙午 庚寅</span><span>五行局：木三局</span></div>
+            `;
+            
+            // 克隆命盘
+            const printGrid = document.getElementById('print-grid');
+            printGrid.innerHTML = document.getElementById('palace-grid').innerHTML;
+            
+            // AI 内容处理
+            const printAiSection = document.getElementById('print-ai-section');
+            if (state.aiAnalysis) {
+                printAiSection.classList.remove('hidden');
+                document.getElementById('print-ai-text').textContent = state.aiAnalysis;
+            } else {
+                printAiSection.classList.add('hidden');
+            }
+            
+            // 触发打印
+            window.print();
         }
 
         // --- Navigation ---
@@ -383,8 +472,9 @@
             document.getElementById('view-chart').className = tab === 'chart' ? 'block overflow-x-auto pb-6 custom-scrollbar' : 'hidden';
             document.getElementById('view-analysis').className = tab === 'analysis' ? 'block space-y-12 pr-4 max-h-[800px] overflow-y-auto custom-scrollbar' : 'hidden';
             
-            document.getElementById('tab-chart').className = tab === 'chart' ? 'tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105' : 'tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-400';
-            document.getElementById('tab-analysis').className = tab === 'analysis' ? 'tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105' : 'tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-400';
+            const commonClasses = "tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all";
+            document.getElementById('tab-chart').className = `${commonClasses} ${tab === 'chart' ? 'bg-white text-red-950 shadow-2xl scale-105' : 'text-slate-400'}`;
+            document.getElementById('tab-analysis').className = `${commonClasses} ${tab === 'analysis' ? 'bg-white text-red-950 shadow-2xl scale-105' : 'text-slate-400'}`;
         }
 
         // --- API Helpers ---
@@ -404,7 +494,7 @@
                     await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
                 }
             }
-            throw new Error("推演天机失败，请稍后再试。");
+            throw new Error("推演失败");
         }
 
         // --- Actions ---
@@ -413,11 +503,11 @@
             loader.classList.remove('hidden');
             
             const palaces = calculatePalaces();
-            const context = `姓名:${state.name}, 性别:${state.gender}, 年:${state.year}, 宫位数据:${JSON.stringify(palaces.map(p=>({name:p.name, stars:p.majorStars.map(s=>s.name)})))}`;
-            const system = "你是一位精通紫微斗数的国学大师倪海厦。风格：幽默、一针见血、强调天人合一。请从天纪（格）、地纪（位）、人纪（心）三个维度分析。";
+            const context = `阿盛(Castor), 1980年庚申生人, 宫位数据:${JSON.stringify(palaces.map(p=>({name:p.name, stars:p.majorStars.map(s=>s.name)})))}`;
+            const system = "你扮演倪海厦老师。风格：幽默、刚毅、重视地理。请生成一份不少于800字的深入三才报告（天、地、人）。";
             
             try {
-                const res = await callGemini(`这是我的排盘数据：${context}。请为我做深度解析。`, system);
+                const res = await callGemini(`请根据这份数据做全方位命理诊断：${context}`, system);
                 state.aiAnalysis = res;
                 document.getElementById('ai-text').textContent = res;
                 document.getElementById('ai-response-container').classList.remove('hidden');
@@ -433,11 +523,10 @@
             if (!state.aiAnalysis) return;
             const btn = document.getElementById('tts-btn');
             btn.disabled = true;
-            
             try {
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/${TTS_MODEL}:generateContent?key=${apiKey}`;
                 const payload = {
-                    contents: [{ parts: [{ text: `请用沉稳睿智的长者声音朗读：${state.aiAnalysis}` }] }],
+                    contents: [{ parts: [{ text: `请诵读倪师断语：${state.aiAnalysis}` }] }],
                     generationConfig: {
                         responseModalities: ["AUDIO"],
                         speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Charon" } } }
@@ -446,14 +535,13 @@
                 const resp = await fetch(url, { method: 'POST', body: JSON.stringify(payload), headers: { 'Content-Type': 'application/json' } });
                 const data = await resp.json();
                 const audioBase64 = data.candidates[0].content.parts[0].inlineData.data;
-                const sampleRate = 24000; // Default
                 
                 const binary = atob(audioBase64);
                 const bytes = new Int16Array(binary.length / 2);
                 for (let i = 0; i < binary.length; i += 2) {
                     bytes[i / 2] = (binary.charCodeAt(i + 1) << 8) | binary.charCodeAt(i);
                 }
-                const wavBlob = pcmToWav(bytes, sampleRate);
+                const wavBlob = pcmToWav(bytes, 24000);
                 const audio = new Audio(URL.createObjectURL(wavBlob));
                 audio.play();
             } catch (e) {
@@ -463,7 +551,6 @@
             }
         });
 
-        // PCM to WAV Helper
         function pcmToWav(pcmData, sampleRate) {
             const buffer = new ArrayBuffer(44 + pcmData.length * 2);
             const view = new DataView(buffer);
@@ -494,7 +581,6 @@
             });
         });
 
-        // Initialize
         window.onload = () => {
             renderChart();
         };
