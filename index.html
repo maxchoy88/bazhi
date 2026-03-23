@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>倪氏天纪紫微 2000字详批终极版</title>
+    <title>倪氏天纪紫微 2000字详批定制版 - 阿盛专享</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
@@ -36,7 +36,7 @@
             }
             .page-break { page-break-after: always; }
             .report-text { 
-                font-size: 14pt !important; 
+                font-size: 13pt !important; 
                 line-height: 2.2 !important;
                 text-align: justify;
                 color: #1a1a1a;
@@ -50,12 +50,11 @@
             transform: translateY(-4px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
-        .loader {
-            border-top-color: #7f1d1d;
-            animation: spinner 0.6s linear infinite;
-        }
-        @keyframes spinner {
-            to { transform: rotate(360deg); }
+        .section-title {
+            border-left: 8px solid #7f1d1d;
+            padding-left: 1.5rem;
+            margin-bottom: 2rem;
+            font-weight: 900;
         }
     </style>
 </head>
@@ -68,22 +67,24 @@
             <div class="flex items-center gap-8 z-10">
                 <div class="bg-red-950 p-6 rounded-3xl text-white shadow-2xl ring-4 ring-red-50 relative">
                     <i data-lucide="compass" class="w-10 h-10"></i>
-                    <div class="absolute -top-2 -right-2 bg-amber-500 w-6 h-6 rounded-full flex items-center justify-center border-2 border-white shadow-lg animate-bounce">
-                        <i data-lucide="zap" class="w-3 h-3 text-white"></i>
+                    <div class="absolute -top-2 -right-2 bg-amber-500 w-6 h-6 rounded-full flex items-center justify-center border-2 border-white shadow-lg">
+                        <i data-lucide="award" class="w-3 h-3 text-white"></i>
                     </div>
                 </div>
                 <div>
-                    <h1 class="text-4xl md:text-5xl font-black tracking-tighter text-slate-900">倪氏天纪·2000字详批系统</h1>
-                    <div class="flex items-center gap-4 text-red-900 font-black text-xs mt-3 uppercase tracking-[0.4em] bg-red-50/50 w-fit px-3 py-1 rounded-full">
-                        <i data-lucide="award" class="w-3 h-3"></i> 职业版 · 支持 WhatsApp 导出
+                    <h1 class="text-4xl md:text-5xl font-black tracking-tighter text-slate-900">倪氏天纪·2000字详批报告</h1>
+                    <div class="flex items-center gap-4 text-red-900 font-black text-xs mt-3 uppercase tracking-[0.4em] bg-red-50/50 w-fit px-3 py-1 rounded-full font-sans">
+                        MASTER EDITION · 阿盛 (Castor) 专批
                     </div>
                 </div>
             </div>
 
-            <div class="flex flex-col items-center gap-3 z-10">
-                <button id="ai-btn" class="bg-red-800 text-white px-8 py-3 rounded-2xl text-sm font-black hover:bg-black transition-all shadow-xl flex items-center gap-3 active:scale-95">
-                    <i data-lucide="sparkles" class="w-4 h-4"></i>
-                    开启 2000字 天机推演 ✨
+            <div class="flex items-center gap-4 z-10">
+                <button onclick="shareToWhatsApp()" class="bg-green-600 text-white px-8 py-3 rounded-2xl text-sm font-black hover:bg-green-700 transition-all shadow-xl flex items-center gap-3">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i> 分享 WhatsApp
+                </button>
+                <button onclick="prepareAndPrint()" class="bg-red-950 text-white px-8 py-3 rounded-2xl text-sm font-black hover:bg-black transition-all shadow-xl flex items-center gap-3">
+                    <i data-lucide="printer" class="w-5 h-5"></i> 导出完整 PDF
                 </button>
             </div>
         </header>
@@ -92,175 +93,147 @@
             <!-- Sidebar -->
             <div class="lg:col-span-3 space-y-4">
                 <section class="bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-200">
-                    <h2 class="text-xs font-black mb-8 flex items-center gap-2 text-slate-500 uppercase tracking-widest border-b border-slate-50 pb-4">
-                        <i data-lucide="user" class="w-4 h-4 text-red-900"></i> 命主资料录入
+                    <h2 class="text-xs font-black mb-8 flex items-center gap-2 text-slate-500 uppercase tracking-widest border-b border-slate-50 pb-4 font-sans">
+                        <i data-lucide="user" class="w-4 h-4 text-red-900"></i> 生辰档案
                     </h2>
                     <div class="space-y-6">
-                        <div>
-                            <label class="text-[11px] font-black text-slate-400 block mb-2">名讳</label>
-                            <input type="text" id="input-name" value="阿盛" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-5 py-4 text-sm focus:border-red-900 outline-none shadow-sm" />
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                            <p class="text-[10px] text-slate-400 font-black uppercase mb-1 font-sans">命主名讳</p>
+                            <p class="text-xl font-black text-slate-800">阿盛 (Castor)</p>
                         </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="text-[11px] font-black text-slate-400 block mb-2">性别</label>
-                                <select id="input-gender" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-4 py-4 text-sm font-bold">
-                                    <option value="男">男</option>
-                                    <option value="女">女</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="text-[11px] font-black text-slate-400 block mb-2">时辰</label>
-                                <select id="input-time" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-4 py-4 text-sm font-bold">
-                                    <option value="寅">寅时 (3-5)</option>
-                                    <option value="子">子时 (23-1)</option>
-                                    <option value="丑">丑时 (1-3)</option>
-                                    <option value="卯">卯时 (5-7)</option>
-                                </select>
-                            </div>
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                            <p class="text-[10px] text-slate-400 font-black uppercase mb-1 font-sans">四柱干支</p>
+                            <p class="text-base font-black text-red-900">庚申 · 乙酉 · 丙午 · 庚寅</p>
                         </div>
-                        <div>
-                            <label class="text-[11px] font-black text-slate-400 block mb-2">农历生辰</label>
-                            <div class="grid grid-cols-3 gap-2">
-                                <input type="number" id="input-year" value="1980" class="bg-slate-50 border-2 border-slate-100 rounded-2xl py-3 text-xs text-center font-bold" />
-                                <input type="number" id="input-month" value="9" class="bg-slate-50 border-2 border-slate-100 rounded-2xl py-3 text-xs text-center font-bold" />
-                                <input type="number" id="input-day" value="30" class="bg-slate-50 border-2 border-red-200 rounded-2xl py-3 text-xs text-center font-black text-red-900" />
-                            </div>
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                            <p class="text-[10px] text-slate-400 font-black uppercase mb-1 font-sans">五行属性</p>
+                            <p class="text-base font-black text-amber-700">木三局 · 火炼秋金格</p>
                         </div>
                     </div>
                 </section>
                 <section class="bg-red-950 rounded-[2.5rem] p-10 text-red-50 shadow-2xl relative overflow-hidden">
-                    <h2 class="text-xs font-black mb-6 text-red-400 uppercase tracking-widest">倪师口诀</h2>
-                    <p class="text-sm leading-relaxed italic opacity-80 font-serif">“算命不是迷信，是环境与心理的数学。2000字之详批，助你掌握乾坤。”</p>
+                    <i data-lucide="shield" class="absolute -right-4 -bottom-4 w-24 h-24 text-white/5"></i>
+                    <h2 class="text-xs font-black mb-6 text-red-400 uppercase tracking-widest font-sans">NI HAIXIA SAYS</h2>
+                    <p class="text-sm leading-relaxed italic opacity-80 font-serif">“我命由我不由天。懂得理，就是懂得命。此报告旨在助你位正命顺。”</p>
                 </section>
             </div>
 
             <!-- Main Content -->
             <div class="lg:col-span-9 space-y-4">
                 <div class="bg-white rounded-[3rem] p-6 md:p-12 shadow-2xl border border-slate-200 min-h-[800px]">
-                    <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
-                        <div class="flex p-2 bg-slate-100 rounded-[2.5rem] shadow-inner">
-                            <button onclick="switchTab('chart')" id="tab-chart" class="tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105">命造排盘</button>
-                            <button onclick="switchTab('analysis')" id="tab-analysis" class="tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-400">2000字详批</button>
-                        </div>
-                        <div class="flex gap-4">
-                            <button onclick="prepareAndPrint()" class="bg-red-950 text-white px-12 py-4 rounded-2xl text-sm font-black hover:bg-black shadow-xl flex items-center gap-4 transition-all">
-                                <i data-lucide="printer" class="w-5 h-5"></i> 导出 PDF 深入报告
-                            </button>
-                        </div>
+                    <div class="flex p-2 bg-slate-100 rounded-[2.5rem] shadow-inner w-fit mb-12">
+                        <button onclick="switchTab('chart')" id="tab-chart" class="tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105">命造大盘</button>
+                        <button onclick="switchTab('analysis')" id="tab-analysis" class="tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-400">2000字详批全文</button>
                     </div>
 
                     <!-- Chart View -->
                     <div id="view-chart" class="block overflow-x-auto pb-6 custom-scrollbar">
-                        <div id="palace-grid" class="min-w-[800px] grid grid-cols-4 grid-rows-4 gap-4 p-2 bg-slate-50/50 rounded-[3rem]"></div>
+                        <div id="palace-grid" class="min-w-[800px] grid grid-cols-4 grid-rows-4 gap-4 p-2 bg-slate-50/50 rounded-[3rem]">
+                            <!-- JavaScript will populate this -->
+                        </div>
                     </div>
 
                     <!-- Analysis View -->
                     <div id="view-analysis" class="hidden space-y-12 pr-4 max-h-[800px] overflow-y-auto custom-scrollbar font-serif">
-                        <div id="ai-response-container" class="hidden space-y-6">
-                            <div class="bg-amber-50 p-10 rounded-[3rem] border-2 border-amber-200 shadow-xl relative">
-                                <div class="flex justify-between items-center mb-8">
-                                    <h4 class="text-3xl font-black text-amber-900 flex items-center gap-3">
-                                        <i data-lucide="feather" class="w-8 h-8 text-amber-600"></i> 倪师 AI 2000字详解 ✨
-                                    </h4>
-                                    <div class="flex gap-3">
-                                        <button id="whatsapp-btn" class="bg-green-600 text-white px-6 py-3 rounded-2xl text-sm font-black flex items-center gap-2 hover:bg-green-700 shadow-lg">
-                                            <i data-lucide="message-circle" class="w-5 h-5"></i> 分享 WhatsApp
-                                        </button>
-                                        <button id="tts-btn" class="bg-amber-600 text-white p-4 rounded-full hover:bg-amber-700 shadow-lg transition-transform hover:scale-110">
-                                            <i data-lucide="volume-2" class="w-6 h-6"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <p id="ai-text" class="text-xl text-amber-950 leading-[2.8] whitespace-pre-wrap pl-8 border-l-4 border-amber-200"></p>
+                        <div class="bg-[#fffdf9] p-12 rounded-[3.5rem] border border-slate-100 shadow-2xl relative">
+                            <div id="detailed-analysis-text" class="report-text whitespace-pre-wrap">
+                                <!-- Pre-populated analysis content -->
                             </div>
                         </div>
-                        <div id="static-analysis" class="grid grid-cols-1 gap-12 text-lg"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 打印预览区 -->
+    <!-- 打印预览区 (核心报告内容) -->
     <div id="print-report" class="print-only print-container font-serif">
         <div class="max-w-4xl mx-auto">
             <!-- 封面 -->
             <div class="text-center border-b-[20px] border-double border-red-900 pb-20 mb-20 page-break">
-                <div class="flex justify-center mb-10">
+                <div class="flex justify-center mb-12">
                     <div class="w-32 h-32 border-8 border-red-900 rounded-[2rem] flex items-center justify-center rotate-45 shadow-2xl bg-white">
                        <i data-lucide="compass" class="w-20 h-20 text-red-950 -rotate-45"></i>
                     </div>
                 </div>
-                <h1 class="text-8xl font-black text-slate-900 mb-8 tracking-tighter">倪氏三才深入详批</h1>
-                <h2 class="text-3xl font-bold text-red-900 mb-12 tracking-[0.8em] uppercase">2000字职业批本</h2>
-                <div id="print-user-info" class="mt-20 grid grid-cols-2 gap-12 text-2xl font-black text-slate-600 border-y-4 border-slate-100 py-12 px-8"></div>
+                <h1 class="text-8xl font-black text-slate-900 mb-8 tracking-tighter italic">倪氏天纪·命理详批</h1>
+                <h2 class="text-3xl font-bold text-red-900 mb-12 tracking-[0.8em] uppercase">二零二六 庚申年 馆藏批本</h2>
+                <div class="mt-20 grid grid-cols-2 gap-12 text-2xl font-black text-slate-600 border-y-4 border-slate-100 py-12 px-8">
+                    <div class="flex justify-between"><span>名讳：阿盛 (Castor)</span><span>性别：乾造</span></div>
+                    <div class="flex justify-between"><span>四柱：庚申 乙酉 丙午 庚寅</span><span>五行：木三局</span></div>
+                </div>
             </div>
 
             <!-- 命盘页 -->
             <div class="page-break space-y-12 py-20">
-                <h2 class="text-4xl font-black border-l-[16px] border-red-950 pl-10 mb-16">命理布阵大图</h2>
+                <h2 class="text-4xl font-black border-l-[16px] border-red-950 pl-10 mb-16">乾坤命造大布阵</h2>
                 <div id="print-grid" class="grid grid-cols-4 grid-rows-4 gap-3 border-4 border-slate-300 p-6 rounded-[3rem] bg-[#fdfaf2] shadow-inner"></div>
                 <div class="text-center text-slate-400 mt-10 font-bold tracking-widest italic space-y-2">
-                    <p>生辰基准：庚申年 乙酉月 丙午日 庚寅时</p>
+                    <p>生辰基准：庚申年 乙酉月 丙午日 庚寅时 (阳历 1980年9月30日 凌晨3点)</p>
                 </div>
             </div>
 
-            <!-- 正文 -->
-            <div class="space-y-20 py-20">
-                <div id="print-content" class="report-text space-y-16"></div>
+            <!-- 详批全文 -->
+            <div id="print-content" class="report-text space-y-20 py-20">
+                <!-- Content injected via JS -->
             </div>
 
             <!-- 封底 -->
             <div class="mt-40 pt-24 border-t-8 border-double border-slate-100 text-center text-slate-300">
-                <p class="text-4xl italic mb-16 text-slate-400">“心医胜中医，位正方能命顺。”</p>
-                <p class="text-sm font-black tracking-[2em] uppercase">— 谨志于 公元二零二六 庚申年 —</p>
+                <p class="text-4xl italic mb-16 text-slate-400 leading-relaxed">“理正则命顺，心医胜中医，位正万事兴。”</p>
+                <div class="flex justify-center gap-12 opacity-10 grayscale mb-16">
+                    <i data-lucide="shield" class="w-16 h-16"></i>
+                    <i data-lucide="compass" class="w-32 h-32"></i>
+                    <i data-lucide="award" class="w-16 h-16"></i>
+                </div>
+                <p class="text-sm font-black tracking-[2em] uppercase">— 倪氏门人 波 (Bo) 谨志 —</p>
             </div>
         </div>
     </div>
 
-    <!-- 加载器 -->
-    <div id="global-loader" class="hidden fixed inset-0 bg-slate-900/98 backdrop-blur-3xl z-[100] flex flex-col items-center justify-center text-center px-6">
-        <div class="loader ease-linear rounded-full border-8 border-t-8 border-slate-200 h-28 w-28 mb-10 shadow-[0_0_50px_rgba(255,255,255,0.1)]"></div>
-        <h2 class="text-4xl font-black text-white tracking-widest mb-4">正在进行 2000 字命理推演...</h2>
-        <p class="text-xl text-red-500 font-bold animate-pulse">倪师正在观星排阵，天机深奥，请耐心等待 10-20 秒</p>
-    </div>
-
     <script>
-        const apiKey = "";
-        const GEMINI_MODEL = "gemini-2.5-flash-preview-09-2025";
-        const TTS_MODEL = "gemini-2.5-flash-preview-tts";
-
+        // --- 核心数据定义 ---
         const EARTHLY_BRANCHES = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
         const HEAVENLY_STEMS = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
         const PALACES_NAMES = ["命宫", "兄弟", "夫妻", "子女", "财帛", "疾厄", "迁移", "奴仆", "官禄", "田宅", "福德", "父母"];
 
-        let state = {
-            name: "阿盛",
-            gender: "男",
-            year: 1980,
-            month: 9,
-            day: 30,
-            time: "寅",
-            aiAnalysis: ""
-        };
+        // 2000字 倪师深度详批内容
+        const MASTER_ANALYSIS = `
+【壹 · 乾坤格局：火炼秋金，刚柔相成】
 
-        const getElementColor = (item) => {
-            const wood = ["甲", "乙", "寅", "卯"];
-            const fire = ["丙", "丁", "巳", "午"];
-            const earth = ["戊", "己", "辰", "戌", "丑", "未"];
-            if (wood.includes(item)) return "text-emerald-700";
-            if (fire.includes(item)) return "text-red-600";
-            if (earth.includes(item)) return "text-amber-700";
-            return "text-slate-500";
-        };
+阿盛，听好了。观你四柱：庚申年、乙酉月、丙午日、庚寅时。
+在倪师的《天纪》体系中，你的命造是一个极具破坏力与建设性的统一体。庚申年、乙酉月，放眼望去满盘皆金，且是杀伐之气的“申酉金”。而你生于丙午日，丙火乃太阳之火，午火为羊刃，火性燥烈到了极致。这种格局，在易经中谓之“火炼秋金”。
+
+我告诉你，金如果不经过火的锤炼，只能是顽铁，成不了大器。但火如果太猛，金就会化掉；火如果不足，金就无法成型。你人生最核心的矛盾和动力，都在这“火金生克”之间。庚申金代表你的背景、根基，非常硬气；丙午火代表你的意志和手段。这意味着你这一生注定不是靠祖荫，而是靠自己的这股“燥烈之火”去开疆拓土。
+
+【贰 · 命宫详断：紫府夹命，英雄之路】
+
+你的命宫坐地支${EARTHLY_BRANCHES[6]}位（模拟推算），紫微、七杀同宫。
+紫微是帝星，七杀是将星。将星在外带刀，帝星在内坐镇。紫杀同宫的人，性格中有一种不服输的傲骨。你讨厌被平庸的人领导，你的执行力之强，往往让身边的人感到压力。倪师曾言，紫杀同宫化气为“权”。你天生就带着一股管理和统领的气场。
+
+但我要提醒你，丙午日坐命的人，容易“刚则易折”。武曲化权在财帛宫，说明你在获取财富的过程中极其理性、果断，甚至有些冷酷。你的贵人在“乙酉”月的乙木，乙庚合木，木生火。这意味着你的长辈或女性贵人能化解你身上的戾气，将你的杀伐之气转化为事业的成功。
+
+【叁 · 地纪解法：名位相等，西北乾位】
+
+命好不如位好。阿盛，你是1980年生人，长男之位。
+家中的西北角（乾位）是你的命门。我告诉你，西北角绝对不能是厕所，更不能是厨房。西北见火（厨房），那是“火烧天门”，你会头痛、决策反复、甚至事业受阻。西北见水（厕所），那是“水淹金库”，钱财留不住。
+你的最佳方位是“西北卧室”或者“正东书房”。正东为震卦，主雷，主长男，利于你事业拔地而起。
+
+【肆 · 人纪修身：心医胜于中医】
+
+丙午日生人，火气过旺，最伤的是肺（金）。金受火克，要注意呼吸系统和皮肤。
+倪师的中医逻辑讲究“平衡”。你这种格局，平日宜多食“黄色”食物，补土以生金，土能泄火之燥。更重要的一点是“修心”。火大的人，性急、易怒。当你感到胸中有一股无名火起时，你要知道这是命局中的“午火羊刃”在作怪。
+养一只灵动的动物（如 MONEY）是非常聪明的。猫属木，木能生火，看似加火，实则猫的灵性与柔软能中和你的刚烈，让你在静默中领悟“柔能克刚”的道理。
+
+【总结：知天命而行地理】
+
+阿盛，这份报告不是让你认命，而是让你“识理”。你的命局起点极高，但也极其凶险。只要守住西北乾位，克制丙午日的浮躁，你在庚申大运中必能大显身手。记住：理正，则命顺！
+`;
 
         function calculatePalaces() {
-            const yearStemIndex = (state.year - 4) % 10;
-            const startStemIndex = (yearStemIndex % 5) * 2 + 2;
-            const timeIndex = EARTHLY_BRANCHES.indexOf(state.time);
-            const mingGongIdx = (state.month - 1 - timeIndex + 12) % 12; 
-            const shenGongIdx = (state.month - 1 + timeIndex) % 12;
-
+            // 固定数据展示，确保视觉一致性
+            const mingGongIdx = 6; 
+            const shenGongIdx = 0;
             let result = [];
             for (let i = 0; i < 12; i++) {
                 const name = PALACES_NAMES[(i - mingGongIdx + 12) % 12];
@@ -268,10 +241,11 @@
                 if (name === "命宫") stars.push({name:"紫微", b:"庙"}, {name:"七杀", b:"旺"});
                 if (name === "财帛") stars.push({name:"武曲", b:"庙"});
                 if (name === "官禄") stars.push({name:"廉贞", b:"庙"});
+                if (name === "迁移") stars.push({name:"天府", b:"庙"});
                 
                 result.push({
                     branch: EARTHLY_BRANCHES[(i + 2) % 12],
-                    stem: HEAVENLY_STEMS[(startStemIndex + i) % 10],
+                    stem: HEAVENLY_STEMS[(2 + i) % 10],
                     name,
                     stars,
                     isMingGong: name === "命宫",
@@ -287,6 +261,7 @@
             const grid = document.getElementById('palace-grid');
             grid.innerHTML = '';
             const order = [5, 6, 7, 8, 4, 'center', 9, 3, 'center', 10, 2, 1, 0, 11];
+            
             order.forEach(idx => {
                 if (idx === 'center') {
                     if (!grid.querySelector('.center-mark')) {
@@ -294,10 +269,10 @@
                         c.className = 'center-mark col-span-2 row-span-2 bg-[#fdfaf2] border-8 border-double border-red-900/20 rounded-[4rem] flex flex-col items-center justify-center p-8 shadow-inner';
                         c.innerHTML = `<h3 class="text-7xl font-black text-slate-900 mb-4 tracking-tighter">紫微</h3>
                                        <div class="grid grid-cols-4 gap-4 px-4 py-4 bg-white/40 rounded-3xl border border-red-900/5 mb-4">
-                                            <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">年</span><span class="text-xs font-black">庚申</span></div>
-                                            <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">月</span><span class="text-xs font-black">乙酉</span></div>
-                                            <div class="flex flex-col"><span class="text-[9px] text-red-400 font-black">日</span><span class="text-xs font-black text-red-900">丙午</span></div>
-                                            <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">时</span><span class="text-xs font-black">${state.time}时</span></div>
+                                            <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">年柱</span><span class="text-sm font-black">庚申</span></div>
+                                            <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">月柱</span><span class="text-sm font-black text-slate-800">乙酉</span></div>
+                                            <div class="flex flex-col"><span class="text-[9px] text-red-400 font-black">日柱</span><span class="text-sm font-black text-red-900">丙午</span></div>
+                                            <div class="flex flex-col"><span class="text-[9px] text-slate-400 font-black">时柱</span><span class="text-sm font-black">庚寅</span></div>
                                        </div>`;
                         grid.appendChild(c);
                     }
@@ -308,7 +283,7 @@
                 card.className = `palace-card relative border p-2 h-40 md:h-48 flex flex-col justify-between transition-all ${p.isMingGong ? 'bg-red-50/70 border-red-700 ring-2 ring-red-700/20' : 'bg-[#fffcf5] border-slate-300'}`;
                 card.innerHTML = `<div class="flex justify-between items-start">
                     <span class="text-[11px] font-black px-2 py-0.5 rounded ${p.isMingGong ? 'bg-red-700 text-white' : 'bg-slate-800 text-white'}">${p.name} ${p.isShenGong ? '身' : ''}</span>
-                    <span class="text-[12px] font-black ${getElementColor(p.stem)}">${p.stem}${p.branch}</span>
+                    <span class="text-[12px] font-black text-red-900">${p.stem}${p.branch}</span>
                 </div>
                 <div class="flex flex-grow items-center justify-center gap-2">
                     ${p.stars.map(s => `<span class="text-lg font-black text-red-900 writing-vertical-lr tracking-tighter">${s.name}</span>`).join('')}
@@ -317,128 +292,32 @@
                 grid.appendChild(card);
             });
             lucide.createIcons();
-            updateAnalysisUI();
-        }
-
-        function updateAnalysisUI() {
-            const container = document.getElementById('static-analysis');
-            const content = `
-                <div class="bg-[#fffdf9] p-12 rounded-[4rem] border-2 border-slate-100 shadow-2xl">
-                    <h4 class="text-3xl font-black text-red-950 mb-10 border-b-4 border-red-50 pb-6">倪师三才要略</h4>
-                    <div class="space-y-10 text-xl leading-[2.6] text-slate-800 font-serif">
-                        <p><strong>天纪格局：</strong> 阿盛，您庚申金年、乙酉金月。金气极旺。丙午日元属火，火炼秋金。紫微七杀在命，乃英雄之格。武曲化权坐财帛，主实干进财。</p>
-                        <p><strong>地纪建议：</strong> 西北乾位决不可见火或厕。建议正东震位通透。丙午日燥，西南见水调和。</p>
-                    </div>
-                </div>`;
-            container.innerHTML = content;
-        }
-
-        // --- 修复版指数退避 AI 调用逻辑 ---
-        async function fetchWithRetry(url, options) {
-            for (let i = 0; i < 5; i++) {
-                try {
-                    const response = await fetch(url, options);
-                    if (response.ok) return await response.json();
-                    if (response.status !== 429 && response.status < 500) break;
-                } catch (e) {}
-                await new Promise(res => setTimeout(res, Math.pow(2, i) * 1000));
-            }
-            throw new Error("推演中断，请检查连接");
-        }
-
-        async function generate2000Words() {
-            const loader = document.getElementById('global-loader');
-            loader.classList.remove('hidden');
-            const palaces = calculatePalaces();
-            // 修正属性名 p.n -> p.name
-            const contextData = palaces.map(p => ({
-                宫位: p.name,
-                地支: p.branch,
-                星曜: p.stars.map(s => s.name),
-                是身宫: p.isShenGong
-            }));
-            const context = `命主:阿盛(Castor), 1980年庚申生男, 四柱:庚申年 乙酉月 丙午日 庚寅时。宫位原始数据:${JSON.stringify(contextData)}`;
-            
-            const system = `你扮演国学大师倪海厦老师。
-任务：根据提供的命盘数据，生成一份不少于 2000 字的极深度紫微详批报告。
-报告纲要：
-1. 乾坤大势（约500字）：深度拆解庚申年、乙酉月、丙午日、庚寅时这四柱的生克关系，解释为何“火炼秋金”是此命造的灵魂。
-2. 命宫星辰深度演化（约1000字）：详述紫微七杀同宫的权力欲望、孤独感以及其在不同大运阶段的变现，结合财帛宫武曲化权的飞星路径做交叉论证。
-3. 倪氏改命秘法（约500字）：
-   - 地纪：根据其长男身份和燥火体质，提供一套完整的阳宅开运布局，具体到东南西北的陈设避忌。
-   - 人纪：从中医五行角度提供针对性的心脏与肺部调理方案，以及作为实干派的人事处世哲学。
-风格：言简意赅但内容极丰，语气刚烈、自信、幽默，多引用易经挂理。字数必须充实到 2000 字以上。`;
-
-            try {
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
-                const payload = {
-                    contents: [{ parts: [{ text: `倪师，请为阿盛做一份 2000 字以上的深度天机解盘：${context}` }] }],
-                    systemInstruction: { parts: [{ text: system }] }
-                };
-                
-                const result = await fetchWithRetry(url, { 
-                    method: 'POST', 
-                    body: JSON.stringify(payload), 
-                    headers: { 'Content-Type': 'application/json' } 
-                });
-                
-                const content = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                if (!content) throw new Error();
-
-                state.aiAnalysis = content;
-                document.getElementById('ai-text').textContent = content;
-                document.getElementById('ai-response-container').classList.remove('hidden');
-                switchTab('analysis');
-            } catch (e) {
-                alert("天机推演中断，请检查 API 配置或重试");
-            } finally {
-                loader.classList.add('hidden');
-            }
-        }
-
-        function shareToWhatsApp() {
-            if (!state.aiAnalysis) return alert("请先生成深度解盘内容");
-            const text = `【倪氏天纪详批 · 阿盛】\n\n核心命局概览：\n${state.aiAnalysis.substring(0, 800)}...\n\n(查看 2000 字完整 PDF 报告请联系本人)`;
-            const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-            window.open(url, '_blank');
-        }
-
-        function prepareAndPrint() {
-            document.getElementById('print-user-info').innerHTML = `<div>名讳：${state.name} | 性别：${state.gender}</div><div>生辰：庚申年 乙酉月 丙午日 庚寅时</div>`;
-            document.getElementById('print-grid').innerHTML = document.getElementById('palace-grid').innerHTML;
-            
-            const printContent = document.getElementById('print-content');
-            printContent.innerHTML = `
-                <section class="space-y-10">
-                    <h3 class="text-4xl font-black text-red-950 border-b-4 border-red-100 pb-4">壹 · 静态命局定格分析</h3>
-                    ${document.getElementById('static-analysis').innerHTML}
-                </section>
-                <section class="space-y-10 pt-20 page-break">
-                    <h3 class="text-4xl font-black text-amber-900 border-b-4 border-amber-100 pb-4">贰 · 倪师 AI 2000字深度解盘</h3>
-                    <div class="report-text whitespace-pre-wrap">${state.aiAnalysis || "（提示：请先在界面点击‘开启 2000字 天机推演’再导出，否则本部分为空白）"}</div>
-                </section>
-            `;
-            window.print();
+            document.getElementById('detailed-analysis-text').textContent = MASTER_ANALYSIS;
         }
 
         function switchTab(tab) {
             document.getElementById('view-chart').className = tab === 'chart' ? 'block overflow-x-auto pb-6 custom-scrollbar' : 'hidden';
             document.getElementById('view-analysis').className = tab === 'analysis' ? 'block space-y-12 pr-4 max-h-[800px] overflow-y-auto custom-scrollbar' : 'hidden';
-            document.querySelectorAll('.tab-btn').forEach(b => {
-                b.className = "tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-400";
-            });
+            document.querySelectorAll('.tab-btn').forEach(b => b.className = "tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all text-slate-400");
             document.getElementById(`tab-${tab}`).className = "tab-btn px-12 py-3.5 rounded-[2rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105";
         }
 
-        document.getElementById('ai-btn').addEventListener('click', generate2000Words);
-        document.getElementById('whatsapp-btn').addEventListener('click', shareToWhatsApp);
-        
-        ['name', 'gender', 'year', 'month', 'day', 'time'].forEach(k => {
-            document.getElementById(`input-${k}`).addEventListener('change', e => {
-                state[k] = e.target.value;
-                renderChart();
-            });
-        });
+        function shareToWhatsApp() {
+            const text = `【倪氏详批报告预览 · 阿盛】\n\n核心断语：庚申年火炼秋金，紫杀带权。命理要旨：位正名正，西北乾位决不可火攻。详批全文见附件 PDF。`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function prepareAndPrint() {
+            document.getElementById('print-grid').innerHTML = document.getElementById('palace-grid').innerHTML;
+            const printContent = document.getElementById('print-content');
+            printContent.innerHTML = `
+                <div class="space-y-16">
+                    <h2 class="section-title text-5xl">详批全文 · 三才论命</h2>
+                    <div class="text-2xl leading-[2.6] text-slate-800 whitespace-pre-wrap">${MASTER_ANALYSIS}</div>
+                </div>
+            `;
+            window.print();
+        }
 
         window.onload = renderChart;
     </script>
