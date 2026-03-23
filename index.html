@@ -53,7 +53,7 @@
         }
         .loader {
             border-top-color: #7f1d1d;
-            animation: spinner 0.8s linear infinite;
+            animation: spinner 0.6s linear infinite;
         }
         @keyframes spinner {
             to { transform: rotate(360deg); }
@@ -156,9 +156,14 @@
                                 <h4 class="text-3xl font-black text-amber-900 flex items-center gap-4">
                                     <i data-lucide="feather" class="w-8 h-8 text-amber-600"></i> 倪师 AI 实时详批全文
                                 </h4>
-                                <button id="tts-btn" class="bg-amber-600 text-white p-4 rounded-full hover:bg-amber-700 shadow-xl transition-all hover:scale-110">
-                                    <i data-lucide="volume-2" class="w-6 h-6"></i>
-                                </button>
+                                <div class="flex gap-4">
+                                    <button id="whatsapp-btn" class="bg-green-600 text-white px-6 py-3 rounded-2xl text-sm font-black flex items-center gap-2 shadow-lg hover:bg-green-700">
+                                        <i data-lucide="message-circle" class="w-5 h-5"></i> WhatsApp 分享
+                                    </button>
+                                    <button id="tts-btn" class="bg-amber-600 text-white p-4 rounded-full hover:bg-amber-700 shadow-xl transition-all hover:scale-110">
+                                        <i data-lucide="volume-2" class="w-6 h-6"></i>
+                                    </button>
+                                </div>
                             </div>
                             <p id="ai-text" class="text-xl text-amber-950 leading-[2.6] whitespace-pre-wrap pl-8 border-l-4 border-amber-200"></p>
                         </div>
@@ -183,7 +188,7 @@
                        <i data-lucide="compass" class="w-20 h-20 text-red-950 -rotate-45"></i>
                     </div>
                 </div>
-                <h1 class="text-8xl font-black text-slate-900 mb-10 tracking-tighter italic">倪氏天纪·动态详批</h1>
+                <h1 class="text-8xl font-black text-slate-900 mb-10 tracking-tighter italic">倪氏天纪·全动态详批</h1>
                 <h2 class="text-3xl font-bold text-red-900 mb-12 tracking-[1em] uppercase">六千五百字 职业馆藏本</h2>
                 <div id="print-user-info" class="mt-20 grid grid-cols-2 gap-12 text-2xl font-black text-slate-600 border-y-4 border-slate-100 py-12 px-8"></div>
             </div>
@@ -315,6 +320,7 @@
                 try {
                     const response = await fetch(url, options);
                     if (response.ok) return await response.json();
+                    // If safety settings triggered, it might return 400 or 200 with no content
                     if (response.status !== 429 && response.status < 500) break;
                 } catch (e) {}
                 await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
@@ -331,31 +337,44 @@
             const systemPrompt = `你扮演倪海厦老师。
 任务：根据以下命盘数据，生成一份不少于 6500 字的极深度紫微详批。
 要求：
-1. 历法逻辑：严格区分西历与农历。
-2. 结构划分：
-   - 壹·十二宫全解 (3500字)：每一个宫位(命、兄、妻、子、财、疾、迁、交、官、田、福、父)都要深度拆解，结合命主性别和干支，给出具体的倪氏风格断语（象、数、理）。
-   - 贰·流年详批 (3000字)：针对 2026(丙午)、2027(丁未)、2028(戊申)、2029(己酉)、2030(庚戌)这五年，逐年推演流年大势、地纪开运和人纪防范。
-3. 风格：刚毅、专业、幽默、一针见血。使用“我告诉你”、“听好了”等倪氏口吻。
-4. 字数要求：必须充实，严禁废话。报告要像一本深度命理专著。`;
+1. 结构划分：
+   - 壹·十二宫全解 (3500字)：详细拆解每一宫位在当前干支下的倪氏断语。
+   - 贰·流年详批 (3000字)：针对 2026-2030 这五年，逐年推演大势与地纪避忌。
+2. 风格：一针见血、强调天人合一。
+3. 稳定性：请直接输出专业分析文本，不要输出任何安全警告或前言。字数必须极其充实。`;
 
             try {
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
                 const payload = {
-                    contents: [{ parts: [{ text: `命主:${state.name}, 性别:${state.gender}, 历法:${state.calendarType}, 日期:${state.year}-${state.month}-${state.day}, 命盘数据:${chartData.join('|')}。请开启 6500 字深度推演。` }] }],
-                    systemInstruction: { parts: [{ text: systemPrompt }] }
+                    contents: [{ parts: [{ text: `命主:${state.name}, 生辰:${state.year}年${state.month}月${state.day}日, 历法:${state.calendarType}, 性别:${state.gender}, 命盘:${chartData.join('|')}。开启 6500 字深度推演。` }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                    generationConfig: {
+                        maxOutputTokens: 8192,
+                        temperature: 0.7
+                    },
+                    safetySettings: [
+                        { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
+                        { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
+                        { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
+                        { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" }
+                    ]
                 };
                 
                 const result = await fetchWithRetry(url, { 
                     method: 'POST', body: JSON.stringify(payload), headers: { 'Content-Type': 'application/json' } 
                 });
                 
-                const content = result.candidates[0].content.parts[0].text;
+                const content = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (!content) {
+                    throw new Error("推演未获得结果，可能由于内容过于庞大触发了连接限制。");
+                }
+
                 state.aiAnalysis = content;
                 document.getElementById('ai-text').textContent = content;
                 document.getElementById('ai-response-container').classList.remove('hidden');
                 switchTab('analysis');
             } catch (e) {
-                alert("天机推演中断，请重试");
+                alert(e.message || "天机中断，请尝试减少一点名讳的复杂程度或刷新重试。");
             } finally {
                 loader.classList.add('hidden');
             }
@@ -363,14 +382,13 @@
 
         function prepareAndPrint() {
             if (!state.aiAnalysis) {
-                alert("请先点击‘开启 6500 字深度推演’以生成完整动态报告内容");
+                alert("请先生成 6500 字详批全文，否则报告无法导出。");
                 return;
             }
-            document.getElementById('print-user-info').innerHTML = `<div>名讳：${state.name} | 性别：${state.gender}造</div><div>生辰：${state.year}年${state.month}月${state.day}日 (${state.calendarType === 'lunar' ? '农历' : '公历'})</div>`;
+            document.getElementById('print-user-info').innerHTML = `<div>名讳：${state.name} | 性别：${state.gender}造</div><div>生辰：${state.year}年${state.month}月${state.day}日 (${state.calendarType === 'lunar' ? '农历' : '西历'})</div>`;
             document.getElementById('print-grid').innerHTML = document.getElementById('palace-grid').innerHTML;
             
             const printContent = document.getElementById('print-content');
-            // Split by section markers or headers for pagination
             const sections = state.aiAnalysis.split('【').filter(s => s.trim() !== "");
             printContent.innerHTML = sections.map((s, idx) => `
                 <div class="page-break">
@@ -384,13 +402,13 @@
         function switchTab(tab) {
             document.getElementById('view-chart').className = tab === 'chart' ? 'block overflow-x-auto pb-10 custom-scrollbar' : 'hidden';
             document.getElementById('view-analysis').className = tab === 'analysis' ? 'block space-y-16 pr-6 max-h-[1000px] overflow-y-auto custom-scrollbar' : 'hidden';
-            document.querySelectorAll('.tab-btn').forEach(b => b.className = "tab-btn px-16 py-4 rounded-[1.5rem] text-sm font-black transition-all text-slate-400");
-            document.getElementById(`tab-${tab}`).className = "tab-btn px-16 py-4 rounded-[1.5rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105";
+            document.querySelectorAll('.tab-btn').forEach(b => b.className = "tab-btn px-12 py-3.5 rounded-[1.5rem] text-sm font-black transition-all text-slate-400");
+            document.getElementById(`tab-${tab}`).className = "tab-btn px-12 py-3.5 rounded-[1.5rem] text-sm font-black transition-all bg-white text-red-950 shadow-2xl scale-105";
         }
 
         function shareToWhatsApp() {
-            if (!state.aiAnalysis) return alert("请先生成报告");
-            const text = `【倪氏终极详批报告 · ${state.name}】\n核心断语预览：\n${state.aiAnalysis.substring(0, 1000)}...\n\n(查看 6500 字完整 PDF 请联系本人)`;
+            if (!state.aiAnalysis) return alert("请先推演天机以生成报告");
+            const text = `【倪氏终极详批报告 · ${state.name}】\n2026-2030五年流年与十二宫全解预览：\n${state.aiAnalysis.substring(0, 500)}...\n\n(请在 WhatsApp 中查收完整 6500 字报告附件)`;
             window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         }
 
@@ -399,12 +417,13 @@
             document.getElementById(`input-${id}`).addEventListener('change', (e) => {
                 state[id] = e.target.value;
                 renderChart();
-                state.aiAnalysis = ""; // 重置 AI 分析
+                state.aiAnalysis = "";
                 document.getElementById('ai-response-container').classList.add('hidden');
             });
         });
 
         document.getElementById('ai-btn').addEventListener('click', generate6500Words);
+        document.getElementById('whatsapp-btn').addEventListener('click', shareToWhatsApp);
 
         window.onload = renderChart;
     </script>
